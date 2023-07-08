@@ -30,7 +30,7 @@ const Dashboard: React.FC<ChartData> = ({ labels, datasets }: ChartData) => {
     return (
         <>
             <div className="flex items-start flex-col bg-[#BCD7CB] w-[100%] -ml-4">
-                <p className="dashboard-txt flex flex-col w-screen text-bold justify-center items-center  bg-white h-[68px] text-[#131316] text-[20px] leading-[24px]">
+                <p className="dashboard-txt flex flex-col w-[100%] text-bold justify-center items-center  bg-white h-[68px] text-[#131316] text-[20px] leading-[24px]">
                     Dashboard
                 </p>
                 <div className="w-[100%] lg:flex justify-between px-4 hidden lg:bg-cover items-center  bg-white " style={{ backgroundImage: `url('/images/dashframe.png')` }} >
