@@ -50,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ isConnected, account, onDisconnect, onC
             onClick={isConnected ? onDisconnect : onConnect}
             className="rounded-md bg-[#00EF8B] text-xl px-5 py-3 justify-center  font-medium text-black shadow-sm hover:bg-[#07a261]"
           >
-            {isConnected ? `${account.slice(0, 8)}...` : "Connect to Flow"}
+            {isConnected ? `${account?.slice(0, 8)}...` : "Connect to Flow"}
           </button>
         </div>
       </nav>
