@@ -47,7 +47,7 @@ const Proposals = () => {
                                         <div className="space-x-6 flex items-center ">
                                             <Image src={user} alt="" className="lg:h-[120px] mt-1 h-[50px] w-[50px] lg:w-[120px]" />
                                             <div className="flex gap-y-[10px] flex-col">
-                                                <h3 className="text-[#00EF8B] lg:text-[40px] text-[14px] font-semibold">{project.name}</h3>
+                                                <h3 className="text-white lg:text-[40px] text-[14px] font-semibold">{project.name}</h3>
                                                 <p className=" text-[#626262] lg:text-[30px] text-[12px] text-center font-semibold ">{project.title}</p>
                                             </div>
                                         </div>
@@ -60,7 +60,7 @@ const Proposals = () => {
                                     </div>
                                     <div className='flex justify-end  items-end'>
                                         <Link href="/proposal" legacyBehavior passHref>
-                                            <a className='text-center text-white lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]'>View</a>
+                                            <a className='text-center text-black font-semibold lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]'>View</a>
                                         </Link>
                                     </div>
                                     <div className='lg:w-[110%] w-[123%]   -ml-10 -mr-0 my-4  bg-white h-[30px]'></div>

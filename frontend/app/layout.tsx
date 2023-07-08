@@ -17,7 +17,7 @@ export default function RootLayout({
 
     <html lang="en">
       <body className='relative'>
-        <Navbar />
+        {/* <Navbar /> */}
         {children}
       </body>
     </html>

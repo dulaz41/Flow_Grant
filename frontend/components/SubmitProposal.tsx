@@ -246,7 +246,7 @@ const SubmitProposal: React.FC = () => {
                                 <div className='flex items-center mt-[50px] mb-[20px] justify-center'>
                                     <button
                                         type="submit"
-                                        className="bg-[#00EF8B] hover:bg-[#07a261]  text-white font-semibold py-3 px-8 rounded-sm"
+                                        className="bg-[#00EF8B] hover:bg-[#07a261]  text-black text-[15px] lg:text-[25px] font-semibold py-3 px-8 rounded-sm"
                                     >
                                         Submit
                                     </button>

@@ -178,7 +178,7 @@ const Campaign = () => {
               </div>
               <div className="flex justify-end  items-end">
                 <Link href="/proposal" legacyBehavior passHref>
-                  <a className="text-center text-white lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]">
+                  <a className="text-center text-black font-semibold lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]">
                     View
                   </a>
                 </Link>

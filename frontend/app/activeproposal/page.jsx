@@ -1,13 +1,15 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import user from "../../public/assets/Ellipse2.png";
 import upload from "../../public/assets/upload.png";
 import Link from "next/link";
 import { FiCopy } from "react-icons/fi";
+import logo from "../../public/images/logo.png";
 
 const Description = () => {
   const [selectedItems, setSelectedItems] = useState([null, null, null, null]);
+  const [isScrollingUp, setIsScrollingUp] = useState(false);
 
   const initialValues = [
     { type: "email", label: "Email", value: "example@example.com" },
@@ -67,14 +69,48 @@ const Description = () => {
     );
   };
 
+
+
+  useEffect(() => {
+    let prevScrollPos = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      setIsScrollingUp(currentScrollPos < prevScrollPos);
+      prevScrollPos = currentScrollPos;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       <div className="flex items-start flex-col bg-white mt-8  ">
-        <p className="dashboard-txt flex flex-col text-bold justify-center items-center h-[68px] text-[#131316] text-[20px] leading-[24px]">
-          Active Proposals
-        </p>
+        <header className="fixed inset-x-0 mb-4 top-0 z-50">
+          <nav
+            className={`flex  items-center justify-between p-6  ${
+              isScrollingUp ? "bg-white" : "bg-white"
+            }`}
+            aria-label="Global"
+          >
+            <div className="flex lg:min-w-0 lg:flex-1">
+              <a href="/" className="-m-1.5 p-1.5">
+                <span className="sr-only">Flow grant</span>
+                <Image
+                  className="flex-shrink-0"
+                  src={logo}
+                  alt="logo"
+                  width={180}
+                  height={53}
+                />
+              </a>
+            </div>
+          </nav>
+        </header>
         <div
-          className="w-[100%] lg:flex justify-between px-4 lg:bg-cover hidden  items-center "
+          className="w-[100%] lg:flex justify-between px-4 mt-10 lg:bg-cover hidden  items-center "
           style={{ backgroundImage: `url('/images/dashframe.png')` }}
         >
           <div className="flex flex-col justify-center  h-[86px] ">
@@ -92,7 +128,7 @@ const Description = () => {
                     className="lg:h-[120px] mt-1 h-[50px] w-[50px] lg:w-[120px]"
                   />
                   <div className="flex gap-y-[10px] flex-col">
-                    <h3 className="text-[#00EF8B] lg:text-[40px] text-[18px] text-center font-semibold">
+                    <h3 className="text-white lg:text-[40px] text-[18px] text-center font-semibold">
                       AbdulAzeez Tasleem
                     </h3>
                   </div>
@@ -183,14 +219,14 @@ const Description = () => {
                 <div className="flex space-x-[40px] justify-center">
                   <div className="">
                     <Link href="/dashboard" legacyBehavior passHref>
-                      <a className="text-center text-white lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]">
+                      <a className="text-center text-black font-semibold lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]">
                         Fund
                       </a>
                     </Link>
                   </div>
                   <div className="">
                     <Link href="#" legacyBehavior passHref>
-                      <a className="text-center text-white lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]">
+                      <a className="text-center text-black font-semibold lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]">
                         Partner
                       </a>
                     </Link>

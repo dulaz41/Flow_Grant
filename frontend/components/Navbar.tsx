@@ -1,11 +1,19 @@
 "use client"
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import logo from '/public/logo.png'
-import Connect from '../app/WalletConnect'
+import logo from '../public/images/logo.png'
+// import Connect from './WalletConnect'
 
-const Navbar = () => {
+interface NavbarProps {
+  isConnected: boolean;
+  onDisconnect: () => Promise<void>;
+  onConnect: () => Promise<void>;
+  account: string | null;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ isConnected, account, onDisconnect, onConnect }) => {
   const [isScrollingUp, setIsScrollingUp] = useState(false);
+
 
   useEffect(() => {
     let prevScrollPos = window.scrollY;
@@ -23,9 +31,9 @@ const Navbar = () => {
 
   return (
     <header className="fixed inset-x-0 mb-4 top-0 z-50">
-      <nav className={`flex  items-center justify-between p-6 lg:px-[77px] ${isScrollingUp ? "bg-white" : "bg-white"
+      <nav className={`flex  items-center justify-between p-6  ${isScrollingUp ? "bg-white" : "bg-white"
         }`} aria-label="Global">
-        <div className="flex lg:flex-1">
+        <div className="flex lg:min-w-0 lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Flow grant</span>
             <Image
@@ -37,12 +45,12 @@ const Navbar = () => {
             />
           </a>
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="lg:inline-flex">
           <button
-            onClick={Connect}
+            onClick={isConnected ? onDisconnect : onConnect}
             className="rounded-md bg-[#00EF8B] text-xl px-5 py-3 justify-center  font-medium text-black shadow-sm hover:bg-[#07a261]"
           >
-            Connect wallet
+            {isConnected ? `${account.slice(0, 8)}...` : "Connect to Flow"}
           </button>
         </div>
       </nav>

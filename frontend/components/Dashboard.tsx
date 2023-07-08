@@ -30,10 +30,10 @@ const Dashboard: React.FC<ChartData> = ({ labels, datasets }: ChartData) => {
     return (
         <>
             <div className="flex items-start flex-col bg-[#BCD7CB] w-[100%] -ml-4">
-                <p className="dashboard-txt flex flex-col text-bold justify-center items-center h-[68px] text-[#131316] text-[20px] leading-[24px]">
+                <p className="dashboard-txt flex flex-col w-screen text-bold justify-center items-center  bg-white h-[68px] text-[#131316] text-[20px] leading-[24px]">
                     Dashboard
                 </p>
-                <div className="w-[100%] lg:flex justify-between px-4 hidden lg:bg-cover items-center " style={{ backgroundImage: `url('/images/dashframe.png')` }} >
+                <div className="w-[100%] lg:flex justify-between px-4 hidden lg:bg-cover items-center  bg-white " style={{ backgroundImage: `url('/images/dashframe.png')` }} >
                     <div className="flex flex-col justify-center  h-[64px] " >
                         <p className=" text-[24px] text-white text-center -mb-2">Welcome, Innovator ✨</p>
                     </div>
@@ -134,7 +134,7 @@ const Dashboard: React.FC<ChartData> = ({ labels, datasets }: ChartData) => {
                                 <input type="number" className="m-4 ml-0 outline-none" placeholder="1.734" />
                             </div>
                             <button className="bg-[#00EF8B]  h-[40px] w-[186px]">
-                                <p className="text-white text-[14px] font-semibold ">Withdraw FTM</p>
+                                <p className="text-black text-[14px] font-semibold ">Withdraw FTM</p>
                             </button>
                         </div>
                         <div className="bg-white flex justify-center items-center m-[24px] w-[270px] h-[122px] ">

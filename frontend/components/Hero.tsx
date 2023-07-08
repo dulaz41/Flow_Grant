@@ -1,14 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 import Link from 'next/link'
-import React, { useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import money from '../public/assets/money.png'
 import file from '../public/assets/file.png'
 import people from '../public/assets/people.png'
 import { motion, AnimatePresence } from "framer-motion";
 import Image from 'next/image';
 import greet from '../public/images/greet.png'
-import Footer from './Footer'
+import Footer from './Footer';
+import * as fcl from "@onflow/fcl";
+import "../flow/config";
 
 
 const features = [
@@ -29,7 +31,13 @@ const features = [
   }
 ]
 
-const Hero = () => {
+interface HeroProps {
+  isConnected: boolean;
+  onClick: () => Promise<void>;
+}
+
+const Hero: React.FC<HeroProps> = ({ isConnected, onClick }) => {
+
 
   const wordContainerRef = useRef<HTMLDivElement>(null);
 
@@ -84,11 +92,11 @@ const Hero = () => {
 
   return (
     <section className='flex flex-col'>
-      <div className=' lg:pt-32 lg:pb-8 lg:px-8 lg:bg-cover lg:bg-no-repeat ' style={{ backgroundImage: `url('/images/Frame.png')` }}>
-        <div className="mx-auto px-6 pt-[38px] lg:px-8">
-          <div className="lg:text-center lg:flex flex flex-col justify-center  lg:flex-col" >
+      <div className=' lg:pt-24 lg:pb-8 lg:px-8 lg:bg-cover flex-shrink-0  lg:bg-no-repeat ' style={{ backgroundImage: `url('/images/Frame.png')` }}>
+        <div className="lg:mx-auto px-2 pt-[38px] ">
+          <div className="lg:text-center text-center lg:flex flex flex-col justify-center  lg:flex-col" >
             <motion.h1
-              className="text-xs font-bold tracking-tight text-center items-center text-white md:text-xl lg:text-4xl"
+              className="text-xs mt-20 lg:mt-0 font-bold tracking-tight text-center items-center text-white md:text-xl lg:text-5xl"
               whileHover={{ scale: 1, rotate: 0 }}
             >
               Become a member of a thriving community of trailblazers, where investors fuel the future and innovators bring their ideas to life.
@@ -105,12 +113,19 @@ const Hero = () => {
                 />
               </AnimatePresence>
             </div>
-            <p className="mx-auto mt-6 max-w-2xl text-[5px] lg:text-base leading-8 text-white">
+            <p className="mx-auto mt-6 max-w-3xl font-semibold text-[10px] lg:text-lg leading-8 text-white">
               Unleash your vision to drive success by funding and proposing revolutionary projects today!
             </p>
-            <div className="mt-8 lg:flex lg:gap-x-2 hidden sm:justify-center">
-              <Link href="/dashboard" legacyBehavior passHref>
-                <a className="rounded-md bg-white text-xl px-7 py-5 justify-center cursor-pointer flex font-medium text-[#00EF8B] shadow-sm hover:bg-[#00EF8B] hover:text-white">
+            <div className="lg:mt-8 flex gap-x-2 mb-2  sm:justify-center">
+              <Link href={isConnected ? "/dashboard" : "#"}
+                legacyBehavior passHref>
+                <a
+                  onClick={() => {
+                    if (!isConnected) {
+                      alert("Please connect to your wallet before you proceed");
+                    }
+                  }}
+                  className="rounded-md bg-white lg:text-xl text-base lg:px-7 p-2 lg:py-5 justify-center cursor-pointer flex font-medium text-[#00EF8B] shadow-sm hover:bg-[#00EF8B] hover:text-white">
                   Get started
                   <span className="text[#00EF8B] hover:text-white ml-2 bg-inherit" aria-hidden="true">
                     &rarr;
@@ -123,15 +138,15 @@ const Hero = () => {
       </div>
       <div className=' flex flex-col mt-6 mb-[25px] '>
         <div>
-          <h4 className='font-semibold mx-auto max-w-6xl text-xs justify-start lg:text-4xl'>Why Flow Grant </h4>
+          <h4 className='font-semibold mx-auto max-w-6xl text-xl justify-start lg:text-4xl'>Why Flow Grant </h4>
         </div>
         <div>
           <div className="mx-auto mt-10 max-w-6xl lg:space-y-3  flex-shrink-0 space-y-2 flex flex-col lg:gap-y-4 ">
-            <p className='text-[7px] font-semibold lg:font-normal lg:text-base   text-[#303030]'>Welcome to Flow Grant, the premier platform that connects visionary funders and passionate proposers to catalyze groundbreaking projects within the Flow ecosystem. Whether you&apos;re seeking funding for your innovative idea or looking to support cutting-edge ventures, Flow Grant is the gateway to unlock limitless possibilities.
+            <p className='text-[11px] font-semibold lg:font-normal lg:text-base   text-[#303030]'>Welcome to Flow Grant, the premier platform that connects visionary funders and passionate proposers to catalyze groundbreaking projects within the Flow ecosystem. Whether you&apos;re seeking funding for your innovative idea or looking to support cutting-edge ventures, Flow Grant is the gateway to unlock limitless possibilities.
             </p>
-            <p className='text-[7px] font-semibold lg:font-normal lg:text-base  text-[#303030]'>Our platform fosters collaboration, transparency, and growth, enabling you to make a lasting impact in the world of blockchain technology.
+            <p className='text-[11px] font-semibold lg:font-normal lg:text-base  text-[#303030]'>Our platform fosters collaboration, transparency, and growth, enabling you to make a lasting impact in the world of blockchain technology.
               Connect with like-minded individuals who share your passion for innovation. With Flow Grant, you have the power to shape the landscape of blockchain and create a legacy of transformable projects.</p>
-            <p className='text-[7px] font-semibold lg:font-normal lg:text-base  text-[#303030]'>
+            <p className='text-[11px] font-semibold lg:font-normal lg:text-base  text-[#303030]'>
               Don&apos;t wait any longer. Take the first step towards revolutionizing the blockchain industry by getting started with Flow Grant today. Together, let&apos;s unleash the potential of tomorrow and make your vision a reality.
             </p>
           </div>
@@ -139,47 +154,48 @@ const Hero = () => {
       </div>
       <div className=' flex mb-[35px] flex-col mt-6'>
         <div className='mb-[50px]'>
-          <h4 className='font-semibold mx-auto max-w-6xl text-xs justify-start lg:text-4xl'>How it works</h4>
+          <h4 className='font-semibold mx-auto max-w-6xl text-xl justify-start lg:text-4xl'>How it works</h4>
         </div>
-        <div className='flex mx-auto justify-center  pl-[134px] pr-[143px] '>
-          <div className=" lg:grid relative left-5 justify-center items-center my-6 flex max-w-6xl lg:grid-cols-1 lg:gap-y-7">
-            <div className="max-w-xl  bg-[#00EF8B]">
-              <p className='text-center text-white py-[20px] px-[45.5px] text-base '>
+        <div className='lg:flex lg:mx-auto justify-center  pl-[14px] pr-[14px]  lg:pl-[134px] lg:pr-[143px] '>
+          <div className=" grid relative left-5 justify-center max-w-2xl items-center my-6  lg:max-w-6xl grid-cols-1 lg:gap-y-7 gap-y-3">
+            <div className="lg:max-w-xl max-w-xs bg-[#00EF8B]">
+              <p className='text-center text-white py-[20px] px-[45.5px] lg:text-base text-xs '>
                 Project creators submit their proposals to Flow Grant, outlining their innovative ideas, project scope, timeline, and funding requirements. The proposals undergo a thorough evaluation process by the funder(s) to assess
               </p>
             </div>
-            <div className="max-w-xl  bg-[#00EF8B]">
-              <p className='text-center text-white py-[20px] px-[45.5px] text-base '>
+            <div className="lg:max-w-xl max-w-xs  bg-[#00EF8B]">
+              <p className='text-center text-white py-[20px] px-[45.5px] lg:text-base text-xs'>
                 Once project proposals are approved, funders can participate in the funding allocation process individually or seek partnerships by creating campaigns and stating their desired contribution amount on Flow Grant.
               </p>
             </div>
-            <div className="max-w-xl  bg-[#00EF8B]">
-              <p className='text-center text-white py-[20px] px-[45.5px] text-base '>
+            <div className="lg:max-w-xl max-w-xs bg-[#00EF8B]">
+              <p className='text-center text-white py-[20px] px-[45.5px] lg:text-base text-xs '>
                 Funders can explore campaigns on Flow Grant, partnering to fund promising projects after thorough review of feasibility, business opportunities, and wealth creation.
               </p>
             </div>
           </div>
-          <div className="aspect-h-5 border-8 justify-center items-center   border-[#00EF8B] aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
+          <div className="aspect-h-3 border-8 justify-center items-center    border-[#00EF8B] aspect-w-2 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
             <Image
               src={greet}
               alt='image'
               className="h-full w-full  object-cover object-center"
+              placeholder="blur"
             />
           </div>
         </div>
       </div>
       <div className='mb-[35px]'>
         <div className='mb-[50px]'>
-          <h4 className='font-semibold mx-auto max-w-6xl text-xs justify-start lg:text-4xl'>Key features</h4>
+          <h4 className='font-semibold mx-auto  max-w-6xl text-xl justify-start lg:text-4xl'>Key features</h4>
         </div>
-        <div className="mt-20 mx-auto max-w-6xl ">
+        <div className="mt-20 lg:mx-auto ml-4 lg:max-w-6xl ">
           <div className="grid grid-cols-1 gap-y-16 md:grid-cols-2 lg:grid-cols-3 md:gap-x-12 md:gap-y-16">
             {features.map((feature) => (
               <div
                 key={feature.description}
                 className="flex justify-center items-center flex-row gap-6 sm:flex-row md:flex-col lg:flex-col"
               >
-                <div className="flex h-[141px] w-[170px] align-middle items-center justify-center rounded-md bg-[#BCD7CB] text-white sm:shrink-0">
+                <div className="flex lg:h-[141px] lg:w-[170px]  align-middle items-center justify-center rounded-md bg-[#BCD7CB] text-white sm:shrink-0">
                   <div className="h-[108px] lg:flex flex align-middle items-center justify-center w-[94px]">
                     <Image src={feature.url} className='align-middle items-center justify-center ' alt="icon" />
                   </div>

@@ -95,7 +95,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="w-[100%]">
-                    <div className="flex flex-col lg:mt-[12px] mt-[18px]   gap-y-[12px]">
+                    <div className="flex flex-col lg:mt-[12px] mt-[18px]  gap-y-[12px]">
                         <div className="lg:h-[980px] w-[100%] border-[2px]  lg:px-[30px] lg:py-[20px] justify-between  border-[#00EF8B] p-[8px] ">
                             <h1 className="text-[40px] text-center text-[#00EF8B] font-extrabold mb-4">Create profile</h1>
                             <form onSubmit={handleSubmit}>
@@ -277,10 +277,10 @@ const Profile = () => {
 
 
 
-                                <div className='flex items-center mt-[50px] mb-[10px] justify-center'>
+                                <div className='flex items-center mt-[75px] mb-[10px] justify-center'>
                                     <button
                                         type="submit"
-                                        className="bg-[#00EF8B] hover:bg-[#07a261]  text-white font-semibold py-3 px-8 rounded-sm"
+                                        className="bg-[#00EF8B] hover:bg-[#07a261]  text-black text-[15px] lg:text-[25px]  font-semibold py-3 px-8 rounded-sm"
                                     >
                                         Submit
                                     </button>
