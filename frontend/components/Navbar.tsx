@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import logo from '/public/logo.png'
+import Connect from '../app/WalletConnect'
 
 const Navbar = () => {
   const [isScrollingUp, setIsScrollingUp] = useState(false);
@@ -37,12 +38,12 @@ const Navbar = () => {
           </a>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a
-            href="#"
+          <button
+            onClick={Connect}
             className="rounded-md bg-[#00EF8B] text-xl px-5 py-3 justify-center  font-medium text-black shadow-sm hover:bg-[#07a261]"
           >
             Connect wallet
-          </a>
+          </button>
         </div>
       </nav>
     </header>
