@@ -59,7 +59,7 @@ pub contract FGrant/*: FlowToken*/ {
     }
 
     pub event ProposalCreated(
-        acct: Address?, name: String, projectName: String, description: String, amount: UFix64
+        from: Address?, name: String, projectName: String, description: String, amount: UFix64
     )
 
     pub event ProposalFunded(
