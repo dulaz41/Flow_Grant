@@ -1,6 +1,8 @@
 "use client"
-import React, { useState, ChangeEvent, FormEvent, MouseEvent } from 'react'
+import Image from 'next/image';
+import React, { useState, ChangeEvent, FormEvent, MouseEvent, useEffect } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import logo from "../public/images/logo.png";
 
 
 
@@ -15,6 +17,7 @@ const SubmitProposal: React.FC = () => {
         website: string;
         socialmedia: string;
         location: string;
+        amount: string;
      
          }>({
 
@@ -25,6 +28,7 @@ const SubmitProposal: React.FC = () => {
         website: '',
         location: '',
         socialmedia: '',
+        amount: '',
         file: null
     });
 
@@ -87,21 +91,52 @@ const SubmitProposal: React.FC = () => {
             website: '',
             location: '',
             socialmedia: '',
+            amount: '',
             file: null
 
         });
         setPasswordError(false);
     };
 
+    const [isScrollingUp, setIsScrollingUp] = useState(false);
+    useEffect(() => {
+        let prevScrollPos = window.scrollY;
+
+        const handleScroll = () => {
+            const currentScrollPos = window.scrollY;
+            setIsScrollingUp(currentScrollPos < prevScrollPos);
+            prevScrollPos = currentScrollPos;
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
         <>
-            <div className="flex items-start flex-col bg-white w-[100%] -ml-4">
-                <p className="dashboard-txt flex flex-col text-bold justify-center items-center h-[68px] text-[#131316] text-[20px] leading-[24px]">
-                    Submit Proposal
-                </p>
-                <div className="w-[100%] lg:flex justify-between px-4 lg:bg-cover hidden  items-center " style={{ backgroundImage: `url('/images/dashframe.png')` }} >
+            <div className="flex items-start flex-col bg-white w-[100%] mt-[68px] -ml-4">
+                <header className="fixed inset-x-0 mb-12 top-0 sm-custom:z-50">
+                    <nav
+                        className={`flex  items-center justify-between p-6  ${isScrollingUp ? "bg-white" : "bg-white"
+                            }`}
+                        aria-label="Global"
+                    >
+                        <div className="flex lg:min-w-0 lg:flex-1">
+                            <a href="/" className="-m-1.5 p-1.5">
+                                <span className="sr-only">Flow grant</span>
+                                <Image
+                                    className="flex-shrink-0 lg:w-[180px] lg:h-[38px] md:w-[182px] w-[120px] h-[25px]"
+                                    src={logo}
+                                    alt="logo"
+                                />
+                            </a>
+                        </div>
+                    </nav>
+                </header>
+                <div className="w-[100%] lg:flex justify-between px-4 lg:bg-cover   items-center " style={{ backgroundImage: `url('/images/dashframe.png')` }} >
                     <div className="flex flex-col justify-center  h-[64px] " >
-                        <p className=" text-[24px] text-white text-center -mb-2">Welcome, Innovator ✨</p>
+                        <p className=" lg:text-[24px] text-base text-white -mb-2">Welcome, Innovator ✨</p>
                     </div>
                 </div>
                 <div className="w-[100%]">
@@ -147,6 +182,19 @@ const SubmitProposal: React.FC = () => {
                                         placeholder='Project description'
                                         required
                                     ></textarea>
+                                </div>
+                                <div className="mb-6">
+                                    {/* <label htmlFor="message" className="block mb-1 font-semibold">Message</label> */}
+                                    <input
+                                        type="number"
+                                        id="amount"
+                                        name="amount"
+                                        value={formData.amount}
+                                        onChange={handleChange}
+                                        placeholder='Funding amount'
+                                        className="border-b-2 border-gray-300 px-4 py-2 outline-none rounded-md w-full"
+                                        required
+                                    />
                                 </div>
                                 <div className="mb-6">
                                     {/* <label htmlFor="message" className="block mb-1 font-semibold">Message</label> */}
@@ -203,7 +251,7 @@ const SubmitProposal: React.FC = () => {
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <label htmlFor="file" className=" text-[#6B717B] mb-1 flex justify-end items-end font-semibold">Upload supporting document (Max 2MB, Only support .jpg, .jpeg, .png, .pdf)</label>
+                                    <label htmlFor="file" className=" text-[#6B717B] text-[12px] mb-1 flex justify-end items-end font-semibold">Upload supporting document (Max 2MB, Only support .jpg, .jpeg, .png, .pdf)</label>
                                     {selectedFile ? (
                                         <div className="flex items-center">
                                             <span className="mr-2">{selectedFile.name}</span>

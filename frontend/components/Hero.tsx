@@ -93,7 +93,7 @@ const Hero: React.FC<HeroProps> = ({ isConnected, onClick }) => {
   return (
     <section className='flex flex-col'>
       <div className=' lg:pt-24 lg:pb-8 lg:px-8 lg:bg-cover flex-shrink-0  lg:bg-no-repeat ' style={{ backgroundImage: `url('/images/Frame.png')` }}>
-        <div className="lg:mx-auto px-2 pt-[38px] ">
+        <div className="lg:mx-auto px-2 lg:pt-[38px] ">
           <div className="lg:text-center text-center lg:flex flex flex-col justify-center  lg:flex-col" >
             <motion.h1
               className="text-xs mt-20 lg:mt-0 font-bold tracking-tight text-center items-center text-white md:text-xl lg:text-5xl"
@@ -113,10 +113,10 @@ const Hero: React.FC<HeroProps> = ({ isConnected, onClick }) => {
                 />
               </AnimatePresence>
             </div>
-            <p className="mx-auto mt-6 max-w-3xl font-semibold text-[10px] lg:text-lg leading-8 text-white">
+            <p className="mx-auto mt-6 lg:max-w-3xl max-w-xs font-semibold text-[10px] lg:text-lg leading-8 text-white">
               Unleash your vision to drive success by funding and proposing revolutionary projects today!
             </p>
-            <div className="lg:mt-8 flex gap-x-2 mb-2  sm:justify-center">
+            <div className="lg:mt-8 flex gap-x-2 mb-2  lg:justify-center items-center justify-center ">
               <Link href={isConnected ? "/dashboard" : "#"}
                 legacyBehavior passHref>
                 <a
@@ -136,12 +136,12 @@ const Hero: React.FC<HeroProps> = ({ isConnected, onClick }) => {
           </div>
         </div>
       </div>
-      <div className=' flex flex-col mt-6 mb-[25px] '>
-        <div>
-          <h4 className='font-semibold mx-auto max-w-6xl text-xl justify-start lg:text-4xl'>Why Flow Grant </h4>
+      <div className=' flex flex-col mt-6   '>
+        <div className='lg:mb-[25px] mb-[5px]'>
+          <h4 className='font-semibold lg:mx-auto lg:max-w-6xl ml-[15px] text-xl justify-start lg:text-4xl'>Why Flow Grant </h4>
         </div>
         <div>
-          <div className="mx-auto mt-10 max-w-6xl lg:space-y-3  flex-shrink-0 space-y-2 flex flex-col lg:gap-y-4 ">
+          <div className="lg:mx-auto lg:mt-10 mt-[15px] lg:max-w-6xl mx-[15px] lg:space-y-3  flex-shrink-0 space-y-2 flex flex-col lg:gap-y-4 ">
             <p className='text-[11px] font-semibold lg:font-normal lg:text-base   text-[#303030]'>Welcome to Flow Grant, the premier platform that connects visionary funders and passionate proposers to catalyze groundbreaking projects within the Flow ecosystem. Whether you&apos;re seeking funding for your innovative idea or looking to support cutting-edge ventures, Flow Grant is the gateway to unlock limitless possibilities.
             </p>
             <p className='text-[11px] font-semibold lg:font-normal lg:text-base  text-[#303030]'>Our platform fosters collaboration, transparency, and growth, enabling you to make a lasting impact in the world of blockchain technology.
@@ -153,28 +153,28 @@ const Hero: React.FC<HeroProps> = ({ isConnected, onClick }) => {
         </div>
       </div>
       <div className=' flex mb-[35px] flex-col mt-6'>
-        <div className='mb-[50px]'>
-          <h4 className='font-semibold mx-auto max-w-6xl text-xl justify-start lg:text-4xl'>How it works</h4>
+        <div className='lg:mb-[50px] mb-[5px] '>
+          <h4 className='font-semibold lg:mx-auto lg:max-w-6xl ml-[15px]  text-xl justify-start lg:text-4xl'>How it works</h4>
         </div>
-        <div className='lg:flex lg:mx-auto justify-center  pl-[14px] pr-[14px]  lg:pl-[134px] lg:pr-[143px] '>
-          <div className=" grid relative left-5 justify-center max-w-2xl items-center my-6  lg:max-w-6xl grid-cols-1 lg:gap-y-7 gap-y-3">
-            <div className="lg:max-w-xl max-w-xs bg-[#00EF8B]">
-              <p className='text-center text-white py-[20px] px-[45.5px] lg:text-base text-xs '>
+        <div className='lg:flex lg:mx-auto flex mx-auto items-center justify-center -ml-3 mr-6  lg:pl-[134px] lg:pr-[143px] '>
+          <div className=" grid relative left-5 justify-center  items-center my-6  lg:max-w-6xl grid-cols-1 lg:gap-y-7 gap-y-3">
+            <div className="lg:max-w-xl max-w-screen-xl bg-[#00EF8B]">
+              <p className='text-center text-black py-[20px] px-[45.5px] lg:text-base text-xs '>
                 Project creators submit their proposals to Flow Grant, outlining their innovative ideas, project scope, timeline, and funding requirements. The proposals undergo a thorough evaluation process by the funder(s) to assess
               </p>
             </div>
-            <div className="lg:max-w-xl max-w-xs  bg-[#00EF8B]">
-              <p className='text-center text-white py-[20px] px-[45.5px] lg:text-base text-xs'>
+            <div className="lg:max-w-xl max-w-screen-xl  bg-[#00EF8B]">
+              <p className='text-center text-black py-[20px] px-[45.5px] lg:text-base text-xs'>
                 Once project proposals are approved, funders can participate in the funding allocation process individually or seek partnerships by creating campaigns and stating their desired contribution amount on Flow Grant.
               </p>
             </div>
-            <div className="lg:max-w-xl max-w-xs bg-[#00EF8B]">
-              <p className='text-center text-white py-[20px] px-[45.5px] lg:text-base text-xs '>
+            <div className="lg:max-w-xl max-w-screen-xl bg-[#00EF8B]">
+              <p className='text-center text-black py-[20px] px-[45.5px] lg:text-base text-xs '>
                 Funders can explore campaigns on Flow Grant, partnering to fund promising projects after thorough review of feasibility, business opportunities, and wealth creation.
               </p>
             </div>
           </div>
-          <div className="aspect-h-3 border-8 justify-center items-center    border-[#00EF8B] aspect-w-2 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
+          <div className="aspect-h-3 border-8 justify-center items-center  lg:flex hidden  border-[#00EF8B] aspect-w-2 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
             <Image
               src={greet}
               alt='image'
@@ -186,14 +186,14 @@ const Hero: React.FC<HeroProps> = ({ isConnected, onClick }) => {
       </div>
       <div className='mb-[35px]'>
         <div className='mb-[50px]'>
-          <h4 className='font-semibold mx-auto  max-w-6xl text-xl justify-start lg:text-4xl'>Key features</h4>
+          <h4 className='font-semibold lg:mx-auto lg:max-w-6xl ml-[15px] text-xl justify-start lg:text-4xl'>Key features</h4>
         </div>
-        <div className="mt-20 lg:mx-auto ml-4 lg:max-w-6xl ">
-          <div className="grid grid-cols-1 gap-y-16 md:grid-cols-2 lg:grid-cols-3 md:gap-x-12 md:gap-y-16">
+        <div className="mt-20 lg:mx-auto ml-4 mr-4 lg:max-w-6xl ">
+          <div className="grid grid-cols-1 gap-y-16 md:grid-cols-3 lg:grid-cols-3 md:gap-x-12 md:gap-y-16">
             {features.map((feature) => (
               <div
                 key={feature.description}
-                className="flex justify-center items-center flex-row gap-6 sm:flex-row md:flex-col lg:flex-col"
+                className="flex justify-center items-center flex-col gap-6  md:flex-col lg:flex-col"
               >
                 <div className="flex lg:h-[141px] lg:w-[170px]  align-middle items-center justify-center rounded-md bg-[#BCD7CB] text-white sm:shrink-0">
                   <div className="h-[108px] lg:flex flex align-middle items-center justify-center w-[94px]">
@@ -210,7 +210,7 @@ const Hero: React.FC<HeroProps> = ({ isConnected, onClick }) => {
           </div>
         </div>
       </div>
-      <Footer />
+     
     </section>
 
   )

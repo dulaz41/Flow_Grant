@@ -30,25 +30,23 @@ const Navbar: React.FC<NavbarProps> = ({ isConnected, account, onDisconnect, onC
   }, []);
 
   return (
-    <header className="fixed inset-x-0 mb-4 top-0 z-50">
-      <nav className={`flex  items-center justify-between p-6  ${isScrollingUp ? "bg-white" : "bg-white"
+    <header className="fixed inset-x-0 lg:mb-4 mb-3 top-0 z-50">
+      <nav className={`flex  items-center justify-between lg:p-6 p-2  ${isScrollingUp ? "bg-white" : "bg-white"
         }`} aria-label="Global">
         <div className="flex lg:min-w-0 lg:flex-1">
           <a href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Flow grant</span>
             <Image
-              className="flex-shrink-0"
+              className="flex-shrink-0 lg:w-[180px] lg:h-[38px] md:w-[182px] w-[120px] h-[25px] "
               src={logo}
               alt="logo"
-              width={180}
-              height={53}
             />
           </a>
         </div>
         <div className="lg:inline-flex">
           <button
             onClick={isConnected ? onDisconnect : onConnect}
-            className="rounded-md bg-[#00EF8B] text-xl px-5 py-3 justify-center  font-medium text-black shadow-sm hover:bg-[#07a261]"
+            className="rounded-md bg-[#00EF8B] lg:text-xl md:text-xl text-[10px]  lg:px-5 lg:py-3 px-[20px] py-[10px]  justify-center  font-medium text-black shadow-sm hover:bg-[#07a261]"
           >
             {isConnected ? `${account?.slice(0, 8)}...` : "Connect to Flow"}
           </button>

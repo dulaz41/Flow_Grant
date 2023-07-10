@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import user from "../../public/assets/Ellipse2.png";
 import { FiCopy } from "react-icons/fi";
 import Link from "next/link";
+import logo from "../../public/images/logo.png";
 
 const Campaign = () => {
   const initialFunds = [
@@ -21,6 +22,7 @@ const Campaign = () => {
   const [inputFunds, setInputFunds] = useState(initialFunds);
   const [inputFunds2, setInputFunds2] = useState(initialFunds2);
   const [showNotification, setShowNotification] = useState(false);
+  const [showNotification2, setShowNotification2] = useState(false);
 
   const handleCopyClick = (index) => {
     const fundsToCopy = inputFunds[index].value;
@@ -30,6 +32,9 @@ const Campaign = () => {
     setShowNotification(true);
     setTimeout(() => {
       setShowNotification(false);
+    }, 2000);
+    setTimeout(() => {
+      setShowNotification2(false);
     }, 2000);
   };
   const handleInputChange = (index, value) => {
@@ -45,18 +50,51 @@ const Campaign = () => {
     });
   };
 
+      const [isScrollingUp, setIsScrollingUp] = useState(false);
+
+
+   useEffect(() => {
+     let prevScrollPos = window.scrollY;
+
+     const handleScroll = () => {
+       const currentScrollPos = window.scrollY;
+       setIsScrollingUp(currentScrollPos < prevScrollPos);
+       prevScrollPos = currentScrollPos;
+     };
+
+     window.addEventListener("scroll", handleScroll);
+
+     return () => window.removeEventListener("scroll", handleScroll);
+   }, []);
+
   return (
     <>
-      <div className="flex items-start flex-col bg-white w-[100%] -ml-4">
-        <p className="dashboard-txt flex flex-col text-bold justify-center items-center h-[68px] text-[#131316] text-[20px] leading-[24px]">
-          Campaigns
-        </p>
+      <div className="flex items-start flex-col bg-white w-[100%] mt-[68px]  -ml-4">
+        <header className="fixed inset-x-0 mb-12 top-0 sm-custom:z-50">
+          <nav
+            className={`flex  items-center justify-between p-6  ${
+              isScrollingUp ? "bg-white" : "bg-white"
+            }`}
+            aria-label="Global"
+          >
+            <div className="flex lg:min-w-0 lg:flex-1">
+              <a href="/" className="-m-1.5 p-1.5">
+                <span className="sr-only">Flow grant</span>
+                <Image
+                  className="flex-shrink-0 lg:w-[180px] lg:h-[38px] md:w-[182px] w-[120px] h-[25px]"
+                  src={logo}
+                  alt="logo"
+                />
+              </a>
+            </div>
+          </nav>
+        </header>
         <div
-          className="w-[100%] lg:flex justify-between px-4 lg:bg-cover hidden  items-center "
+          className="w-[100%] lg:flex justify-between px-4 lg:bg-cover   items-center "
           style={{ backgroundImage: `url('/images/dashframe.png')` }}
         >
           <div className="flex flex-col justify-center  h-[64px] ">
-            <p className=" text-[24px] text-white text-center -mb-2">
+            <p className=" lg:text-[24px] text-base text-white -mb-2">
               Welcome, Innovator ✨
             </p>
           </div>
@@ -81,14 +119,14 @@ const Campaign = () => {
                   </div>
                 </div>
                 <div className="flex flex-col lg:pt-[18px] pt-[6px] gap-y-4">
-                  <p className=" text-black lg:text-[24px] text-[12px] text-center font-semibold ">
+                  <p className=" text-black sm-custom:text-[24px] text-[12px] text-center font-semibold ">
                     $FLOW 500,000
                   </p>
                   {/* <p className=" text-[#626262] lg:text-[30px] text-[14px] text-center font-semibold ">In review</p> */}
                 </div>
               </div>
-              <div className="lg:mx-[30px] lg:mt-[43px] mx-0">
-                <div className="lg:h-[252px] lg:w-[776px] w-[450px]  mb-[34px] border-[2px] flex mx-auto  border-[#00EF8B] p-[8px] ">
+              <div className="sm-custom:mx-[30px] mt-[23px] sm-custom:mt-[43px] mx-0">
+                <div className="sm-custom:h-[252px] sm-custom:w-[776px] w-[350px]  mb-[34px] border-[2px] flex mx-auto  border-[#00EF8B] p-[8px] ">
                   <div className="flex flex-col  mx-auto">
                     {inputFunds.map((input, index) => (
                       <div
@@ -96,7 +134,7 @@ const Campaign = () => {
                         className=" grid grid-cols-2 lg:w-[80%] w-[100%] lg:items-center gap-x-0 items-center space-y-3  "
                       >
                         <label
-                          className=" text-[#6B717B] text-2xl lg:ml-7 lg:mr-10 mt-3 font-semibold text-start"
+                          className=" text-[#6B717B] sm-custom:text-2xl text-xl lg:ml-7 lg:mr-10 mt-3 font-semibold text-start"
                           htmlFor={`inputField-${index}`}
                         >
                           {input.label}
@@ -134,8 +172,8 @@ const Campaign = () => {
                   Others
                 </h2>
               </div>
-              <div className="lg:mx-[30px] lg:mt-[43px] mx-0">
-                <div className="lg:h-[252px] lg:w-[776px] w-[450px]  mb-[34px] border-[2px] flex mx-auto  border-[#00EF8B] p-[8px] ">
+              <div className="sm-custom:mx-[30px] mt-[23px] sm-custom:mt-[43px] mx-0">
+                <div className="sm-custom:h-[252px] sm-custom:w-[776px] w-[350px]  mb-[34px] border-[2px] flex mx-auto  border-[#00EF8B] p-[8px] ">
                   <div className="flex flex-col  mx-auto">
                     {inputFunds2.map((input, index) => (
                       <div
@@ -143,7 +181,7 @@ const Campaign = () => {
                         className=" grid grid-cols-2 lg:w-[80%] w-[100%] lg:items-center gap-x-0 items-center space-y-3  "
                       >
                         <label
-                          className=" text-[#6B717B] text-2xl lg:ml-7 lg:mr-10 mt-3 font-semibold text-start"
+                          className=" text-[#6B717B] sm-custom:text-2xl text-xl lg:ml-7 lg:mr-10 mt-3 font-semibold text-start"
                           htmlFor={`inputField-${index}`}
                         >
                           {input.label}
@@ -168,11 +206,7 @@ const Campaign = () => {
                         </div>
                       </div>
                     ))}
-                    {showNotification && (
-                      <div className=" flex justify-center mx-auto w-[180px] bg-blue-500 text-white px-4 py-2 rounded-md  top-4 right-4">
-                        Copied to clipboard!
-                      </div>
-                    )}
+                   
                   </div>
                 </div>
               </div>

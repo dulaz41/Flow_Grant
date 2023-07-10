@@ -64,24 +64,24 @@ const Page = () => {
   return (
 
     <div className='flex flex-row  lg:pt-[28px]'>
-      <header className="fixed inset-x-0 mb-4 top-0 z-50">
-        <nav className={`flex  items-center justify-between p-6  ${isScrollingUp ? "bg-white" : "bg-white"
-          }`} aria-label="Global">
+      <header className="fixed inset-x-0 mb-12 top-0 sm-custom:z-50">
+        <nav
+          className={`flex  items-center justify-between p-6  ${isScrollingUp ? "bg-white" : "bg-white"
+            }`}
+          aria-label="Global"
+        >
           <div className="flex lg:min-w-0 lg:flex-1">
             <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Flow grant</span>
               <Image
-                className="flex-shrink-0"
+                className="flex-shrink-0 lg:w-[180px] lg:h-[38px] md:w-[182px] w-[120px] h-[25px]"
                 src={logo}
                 alt="logo"
-                width={180}
-                height={53}
               />
             </a>
           </div>
-         
         </nav>
-        </header>
+      </header>
       {/*dashboard sidebar*/}
       <Sidebar isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} setActiveItem={setActiveItem} activeItem={activeItem}  />
       <MainContent activeItem={activeItem} />

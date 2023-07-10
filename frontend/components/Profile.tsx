@@ -1,10 +1,15 @@
 "use client"
-import React, { useState, ChangeEvent, FormEvent, MouseEvent } from 'react'
+import React, { useState, ChangeEvent, FormEvent, MouseEvent, useEffect } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import logo from "../public/images/logo.png";
+import Image from 'next/image';
+
 
 
 
 const Profile = () => {
+
+    const [isScrollingUp, setIsScrollingUp] = useState(false);
 
     const [formData, setFormData] = useState<{
         FirstName: string;
@@ -83,15 +88,45 @@ const Profile = () => {
         setPasswordError(false);
     };
 
+
+    useEffect(() => {
+        let prevScrollPos = window.scrollY;
+
+        const handleScroll = () => {
+            const currentScrollPos = window.scrollY;
+            setIsScrollingUp(currentScrollPos < prevScrollPos);
+            prevScrollPos = currentScrollPos;
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
         <>
-            <div className="flex items-start flex-col bg-white w-[100%] -ml-4">
-                <p className="dashboard-txt flex flex-col text-bold justify-center items-center h-[68px] text-[#131316] text-[20px] leading-[24px]">
-                    Create profile
-                </p>
-                <div className="w-[100%] lg:flex justify-between px-4 lg:bg-cover hidden  items-center " style={{ backgroundImage: `url('/images/dashframe.png')` }} >
+            <div className="flex items-start flex-col bg-white w-[100%] mt-[68px]  -ml-4">
+                <header className="fixed inset-x-0 mb-12 top-0 sm-custom:z-50">
+                    <nav
+                        className={`flex  items-center justify-between p-6  ${isScrollingUp ? "bg-white" : "bg-white"
+                            }`}
+                        aria-label="Global"
+                    >
+                        <div className="flex lg:min-w-0 lg:flex-1">
+                            <a href="/" className="-m-1.5 p-1.5">
+                                <span className="sr-only">Flow grant</span>
+                                <Image
+                                    className="flex-shrink-0 lg:w-[180px] lg:h-[38px] md:w-[182px] w-[120px] h-[25px]"
+                                    src={logo}
+                                    alt="logo"
+                                />
+                            </a>
+                        </div>
+                    </nav>
+                </header>
+                <div className="w-[100%] lg:flex justify-between px-4 lg:bg-cover   items-center " style={{ backgroundImage: `url('/images/dashframe.png')` }} >
                     <div className="flex flex-col justify-center  h-[64px] " >
-                        <p className=" text-[24px] text-white text-center -mb-2">Welcome, Innovator ✨</p>
+                        <p className=" lg:text-[24px] text-base text-white -mb-2">Welcome, Innovator ✨</p>
                     </div>
                 </div>
                 <div className="w-[100%]">

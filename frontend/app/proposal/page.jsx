@@ -7,7 +7,6 @@ import Link from "next/link";
 import { FiCopy } from "react-icons/fi";
 import logo from "../../public/images/logo.png";
 
-
 const Description = () => {
   const [selectedItems, setSelectedItems] = useState([null, null, null, null]);
   const [selectedFunds, setSelectedFunds] = useState([null, null, null]);
@@ -20,13 +19,12 @@ const Description = () => {
     { type: "address", label: "Address", value: "123 Street, City" },
     { type: "social-media", label: "Social Media", value: "@example" },
   ];
- 
+
   const initialFunds = [
     { type: "number", label: "funding amount", value: "$FLOW 100,000" },
     { type: "text", label: "Funder’s name", value: "Abdulsalam Ibrahim" },
     { type: "email", label: "Contact", value: "example@example.com" },
   ];
-
 
   const [inputValues, setInputValues] = useState(initialValues);
   const [inputFunds, setInputFunds] = useState(initialFunds);
@@ -45,11 +43,6 @@ const Description = () => {
 
   const handleInputChange = (index, value) => {
     setInputValues((prevInputValues) => {
-      const newInputValues = [...prevInputValues];
-      newInputValues[index] = value;
-      return newInputValues;
-    });
-    setInputFunds((prevInputValues) => {
       const newInputValues = [...prevInputValues];
       newInputValues[index] = value;
       return newInputValues;
@@ -87,25 +80,24 @@ const Description = () => {
     );
   };
 
+  useEffect(() => {
+    let prevScrollPos = window.scrollY;
 
-   useEffect(() => {
-     let prevScrollPos = window.scrollY;
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      setIsScrollingUp(currentScrollPos < prevScrollPos);
+      prevScrollPos = currentScrollPos;
+    };
 
-     const handleScroll = () => {
-       const currentScrollPos = window.scrollY;
-       setIsScrollingUp(currentScrollPos < prevScrollPos);
-       prevScrollPos = currentScrollPos;
-     };
+    window.addEventListener("scroll", handleScroll);
 
-     window.addEventListener("scroll", handleScroll);
-
-     return () => window.removeEventListener("scroll", handleScroll);
-   }, []);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
       <div className="flex items-start flex-col bg-white mt-8  ">
-        <header className="fixed inset-x-0 mb-4 top-0 z-50">
+        <header className="fixed inset-x-0 mb-4 top-0 sm-custom:z-50">
           <nav
             className={`flex  items-center justify-between p-6  ${
               isScrollingUp ? "bg-white" : "bg-white"
@@ -155,7 +147,7 @@ const Description = () => {
                           <input
                             id={`inputField-${index}`}
                             value={input.value}
-                            readOnly
+                        
                             placeholder={input.value}
                             onChange={(e) =>
                               handleInputChange(index, e.target.value)

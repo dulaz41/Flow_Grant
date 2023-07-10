@@ -10,6 +10,7 @@ module.exports = {
       screens: {
         "lg-custom": "1440px",
         "md-custom": "780px",
+        "sm-custom": "770px",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

@@ -46,7 +46,7 @@ const Sidebar: React.FC<MenuProps & { setActiveItem: (item: string) => void } & 
             {isActive ? (
                 <div className="flex bg-[#F5F8FE] justify-between h-[38px]">
                     {isActive ? (
-                        <div className="w-[4px] bg-[#00EF8B]   rounded-tr-lg rounded-br-lg"></div>
+                        <div className="w-[4px] bg-[#00EF8B]  rounded-tr-lg rounded-br-lg"></div>
                     ) : (
                         <span></span>
                     )}
@@ -86,7 +86,7 @@ const Sidebar: React.FC<MenuProps & { setActiveItem: (item: string) => void } & 
                     <span className="flex items-center text-[#56616B] flex-start w-[80%] space-x-2 px-4">
                         {icon &&
                             React.createElement(icon, {
-                                size: 20,
+                                size: 15,
                                 className: `${onClick ? "text-base" : "text-[12px]"} ${isActive ? "text-[#00EF8B]" : ""
                                     }`,
                             })}
@@ -121,7 +121,7 @@ const Sidebar: React.FC<MenuProps & { setActiveItem: (item: string) => void } & 
         >
             {/* Menu button for small and medium devices */}
             <button
-                className="block md-custom:hidden fixed z-50 right-0 top-0 mr-4 mt-4 text-gray-700 hover:text-gray-800 focus:outline-none"
+                className="block md-custom:hidden fixed z-50 right-0 top-0 mr-4 mt-6 text-[#00EF8B] hover:text-gray-800 focus:outline-none"
                 onClick={toggleMenu}
             >
                 {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}

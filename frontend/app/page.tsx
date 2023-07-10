@@ -1,5 +1,5 @@
 "use client"
-import { Hero, Navbar } from '@/components'
+import { Footer, Hero, Navbar } from '@/components'
 import Image from 'next/image';
 import React, {useState } from 'react'
 import * as fcl from "@onflow/fcl";
@@ -43,6 +43,7 @@ export default function Home(): JSX.Element {
     <main className="overflow-hidden relative">
       <Navbar isConnected={isConnected} account={account} onDisconnect={handleDisconnect} onConnect={handleClick} />
       <Hero isConnected={isConnected} onClick={handleClick} />
+      <Footer isConnected={isConnected} onClick={handleClick} />
     </main>
   );
 }
