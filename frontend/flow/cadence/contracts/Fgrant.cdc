@@ -1,7 +1,6 @@
-import FlowToken from "./FlowToken.cdc"
-import FungibleToken from "./FungibleToken.cdc"
+//import FlowToken from "./FlowToken.cdc"
 
-pub contract FGrant: FlowToken {
+pub contract FGrant/*: FlowToken*/ {
 
     pub var proposals: @{Address: Proposal}
     pub var proposalCounter: UInt64
@@ -106,14 +105,14 @@ pub contract FGrant: FlowToken {
         return <- proposal
     }
 
-    pub fun getProposer(proposarAddress: Address): &Proposal? {
-        return &self.proposals[proposarAddress] as &Proposal?
+    pub fun getProposer(proposerAddress: Address): &Proposal? {
+        return &self.proposals[proposerAddress] as &Proposal?
     }
 
     pub fun getProposers(): [&Proposal] {
         let propose: [&Proposal] = []
-        for proposarAddress in self.proposals.keys {
-            propose.append(self.getProposer(proposarAddress: proposarAddress)!)
+        for proposerAddress in self.proposals.keys {
+            propose.append(self.getProposer(proposerAddress: proposerAddress)!)
         }
         return propose
     }
