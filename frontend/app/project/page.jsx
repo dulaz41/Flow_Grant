@@ -172,7 +172,7 @@ const Description = () => {
                 {inputValues.map((input, index) => (
                   <div
                     key={index}
-                    className="grid grid-cols-2  mx-[242px] mb-[31px] "
+                    className="sm-custom:grid sm-custom:grid-cols-2 flex flex-col  sm-custom:mx-[242px] md-custom:mx-[102px] mx-[50px] mb-[31px] "
                   >
                     <label
                       className="flex items-start text-start"
@@ -180,7 +180,7 @@ const Description = () => {
                     >
                       {input.label}
                     </label>
-                    <div className="flex w-[430px] justify-between border-2 border-[#00EF8B]">
+                    <div className="flex sm-custom:w-[430px] md-custom:w-[302px] w-[300px] justify-between border-2 border-[#00EF8B]">
                       <input
                         id={`inputField-${index}`}
                         type="text"
@@ -206,14 +206,14 @@ const Description = () => {
                   </div>
                 )}
               </div>
-              <div className="flex justify-center items-center ">
-                <p className="text-lg font-normal text-[#303030] ">
+              <div className="lg:flex lg:flex-row sm-custom:flex-col flex-col justify-center  items-center ">
+                <p className="lg:text-lg font-normal mb-6 lg:mb-0 text-sm text-[#303030] ">
                   Seize the opportunity to shape the future! FUND projects
                   individually and make a direct impact. Or explore PARTNERSHIP
                   possibilities and collaborate with other like-minded funders
                   to maximize the potential of promising projects.
                 </p>
-                <div className="flex space-x-[40px] justify-center">
+                <div className="flex  space-x-[40px] justify-center">
                   <div className="">
                     <Link href="/dashboard" legacyBehavior passHref>
                       <a className="text-center text-black font-semibold lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]">
@@ -222,7 +222,7 @@ const Description = () => {
                     </Link>
                   </div>
                   <div className="">
-                    <Link href="#" legacyBehavior passHref>
+                    <Link href="/proposal" legacyBehavior passHref>
                       <a className="text-center text-black font-semibold lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]">
                         Partner
                       </a>

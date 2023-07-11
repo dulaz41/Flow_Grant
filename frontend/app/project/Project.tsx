@@ -70,44 +70,9 @@ const Project = () => {
                         <p className=" lg:text-[24px] text-base text-white -mb-2">Welcome, Innovator ✨</p>
                     </div>
                 </div>
-                <div className="w-[100%] border-[2px] border-[#00EF8B] mt-[10px] p-[15px]  flex flex-col">
-                    <div className="flex flex-col lg:mt-[12px] mt-[18px]   gap-y-[12px]">
-                        <h1 className='text-[#626262] text-[30px] font-semibold my-3 bg-white '>In campaign</h1>
-                        <div className="lg:h-[100%] w-[100%]  justify-between overflow-x-auto ">
-                            <div className="flex sm-custom:w-[3298px] w-[3000px]  gap-4">
-                                {projects.map((project) => (
-                                    <div key={project.id} className='bg-[#BCD7CB] p-[50px]   overflow-hidden w-auto ' >
-                                        <div className='sm-custom:w-[760px] w-[300px] sm-custom:h-[390px] h-[260px] '>
-                                            <div className='flex justify-between '>
-                                                <div className="space-x-6 flex items-center ">
-                                                    <Image src={user} alt="" className="lg:h-[120px] mt-1 h-[50px] w-[50px] lg:w-[120px]" />
-                                                    <div className="flex gap-y-[10px] flex-col">
-                                                        <h3 className="text-white lg:text-[40px] text-[14px] font-semibold">{project.name}</h3>
-                                                        <p className=" text-[#626262] lg:text-[30px] text-[12px] text-center font-semibold ">{project.title}</p>
-                                                    </div>
-                                                </div>
-                                                <div className='flex flex-col lg:pt-[18px] pt-[6px] sm-custom:gap-y-4'>
-                                                    <p className=" text-black lg:text-[24px] text-[9px] text-center sm-custom:font-semibold font-bold ">$FLOW 500,000</p>
-                                                </div>
-                                            </div>
-                                            <div className='my-[43px] lg:h-[116px] lg:w-[98%]'>
-                                                <p className='text-[#303030] lg:text-2xl text-sm'>{project.description}</p>
-                                            </div>
-                                            <div className='flex justify-end  items-end'>
-                                                <Link href="/proposal" legacyBehavior passHref>
-                                                    <a className='text-center text-black font-semibold lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]'>View</a>
-                                                </Link>
-                                            </div>
-                                        </div>
-                                        {/* <div className='lg:w-[110%] w-[123%]   -ml-10 -mr-0 my-4  bg-white h-[30px]'></div> */}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                    </div>
-                        <h1 className='text-[#626262] text-[30px] font-semibold my-3 bg-white '>Others</h1>
+                <div className="w-[100%]  flex flex-col">
                     <div className="flex flex-col lg:mt-[12px] mt-[18px] bg-[#BCD7CB]   gap-y-[12px]">
+                        
                         <div className="lg:h-[100%] w-[100%] border-[2px]  lg:px-[30px] lg:py-[20px] justify-between  border-[#00EF8B] p-[8px] ">
                            {projects.map((project)=>( 
                            <div key={project.id} >

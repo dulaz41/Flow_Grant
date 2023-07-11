@@ -65,7 +65,7 @@ const Dashboard: React.FC<ChartData> = ({ labels, datasets }: ChartData) => {
                         </div>
                     </nav>
                 </header>
-                <div className="w-[96%] sm-custom:w-[100%] lg:flex justify-between px-4 lg:bg-cover   items-center " style={{ backgroundImage: `url('/images/dashframe.png')` }} >
+                <div className="w-[98%] sm-custom:w-[100%] lg:flex justify-between px-4 lg:bg-cover   items-center " style={{ backgroundImage: `url('/images/dashframe.png')` }} >
                     <div className="flex flex-col justify-center  h-[64px] " >
                         <p className=" lg:text-[24px] text-base text-white -mb-2">Welcome, Innovator ✨</p>
                     </div>
@@ -101,7 +101,7 @@ const Dashboard: React.FC<ChartData> = ({ labels, datasets }: ChartData) => {
                                 <p className=" text-[#53D258] text-[12px] text-center font-semibold ">+8.74%</p>
                             </div>
                         </div>
-                        <div className="col-span-2 bg-white lg:w-[619px] lg:h-[313px] w-[395px] h-3[25px] lg:m-[24px] lg:mt-4 sm-custom:px-[18px] py-[16px] sm-custom:py-[8px]">
+                        <div className="col-span-2 bg-white lg:w-[630px] sm-custom:w-[630px]  lg:h-[313px] w-[395px] h-3[25px] lg:m-[24px] lg:mt-4 sm-custom:px-[18px] py-[16px] sm-custom:py-[8px]">
                             <h2 className="text-[#00EF8B] lg:text-[24px] text-[16px] font-semibold">Funding history</h2>
                             <div className="flex flex-col mt-[12px] gap-y-[12px]">
                                 <div className="lg:h-[75px] h-[56px] lg:w-[584px] w-[368px] border-[2px] flex justify-between   border-[#00EF8B] p-[8px] ">
@@ -139,7 +139,7 @@ const Dashboard: React.FC<ChartData> = ({ labels, datasets }: ChartData) => {
                         </div>
                     </div>
                     <div className="lg:w-[30%] w-[20%] sm-custom:flex hidden sm-custom:flex-col lg:mx-[18px]   ">
-                        <div className="bg-white px-[16px] py-[15px] lg:m-[24px] ml-[54px] lg:w-[250px] w-[181px] h-[116px] ">
+                        <div className="bg-white px-[16px] py-[15px] lg:m-[24px] ml-[54px] lg:w-[267px] sm-custom:w-[267px] w-[181px] h-[116px] ">
                             <div className="flex mb-2 justify-center items-center">
                                 <h3 className="text-[#00EF8B] lg:text-[16px] text-[14px] text-center font-semibold">Deposit</h3>
                             </div>

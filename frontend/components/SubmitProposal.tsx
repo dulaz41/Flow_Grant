@@ -141,7 +141,7 @@ const SubmitProposal: React.FC = () => {
                 </div>
                 <div className="w-[100%]">
                     <div className="flex flex-col lg:mt-[12px] mt-[18px]   gap-y-[12px]">
-                        <div className="lg:h-[980px] w-[100%] border-[2px]  lg:px-[30px] lg:py-[20px] justify-between  border-[#00EF8B] p-[8px] ">
+                        <div className="lg:h-[1080px] w-[100%] border-[2px]  lg:px-[30px] lg:py-[20px] justify-between  border-[#00EF8B] p-[8px] ">
                             <h1 className="text-[40px] text-center text-[#00EF8B] font-extrabold mb-4">Submit proposal</h1>
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-6">
@@ -191,7 +191,7 @@ const SubmitProposal: React.FC = () => {
                                         name="amount"
                                         value={formData.amount}
                                         onChange={handleChange}
-                                        placeholder='Funding amount'
+                                        placeholder='Funding amount in $FLOW'
                                         className="border-b-2 border-gray-300 px-4 py-2 outline-none rounded-md w-full"
                                         required
                                     />

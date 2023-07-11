@@ -8,15 +8,44 @@ import logo from "../../public/images/logo.png";
 
 const Campaign = () => {
   const initialFunds = [
-    { type: "number", label: "funding amount", value: "$FLOW 200,000" },
-    { type: "text", label: "Funder’s name", value: "Abdulsalam Ibrahim" },
-    { type: "email", label: "Contact", value: "example@example.com" },
+    {
+      type: "number",
+      label: "Funding amount",
+      value: "",
+      placeholder: "$FLOW 200,000",
+    },
+    {
+      type: "text",
+      label: "Funder’s name",
+      value: "",
+      placeholder: "Abdulsalam Ibrahim",
+    },
+    {
+      type: "email",
+      label: "Contact",
+      value: "",
+      placeholder: "example@example.com",
+    },
   ];
-
   const initialFunds2 = [
-    { type: "number", label: "funding amount", value: "$FLOW 100,000" },
-    { type: "text", label: "Funder’s name", value: "Abdulsalam Ibrahim" },
-    { type: "email", label: "Contact", value: "example@example.com" },
+    {
+      type: "number",
+      label: "Funding amount",
+      value: "",
+      placeholder: "$FLOW 100,000",
+    },
+    {
+      type: "text",
+      label: "Funder’s name",
+      value: "",
+      placeholder: "Abdulsalam Ibrahim",
+    },
+    {
+      type: "email",
+      label: "Contact",
+      value: "",
+      placeholder: "example@example.com",
+    },
   ];
 
   const [inputFunds, setInputFunds] = useState(initialFunds);
@@ -40,32 +69,34 @@ const Campaign = () => {
   const handleInputChange = (index, value) => {
     setInputFunds((prevInputValues) => {
       const newInputValues = [...prevInputValues];
-      newInputValues[index] = value;
-      return newInputValues;
-    });
-    setInputFunds2((prevInputValues) => {
-      const newInputValues = [...prevInputValues];
-      newInputValues[index] = value;
+      newInputValues[index].value = value;
       return newInputValues;
     });
   };
 
-      const [isScrollingUp, setIsScrollingUp] = useState(false);
+  const handleInputChange2 = (index, value) => {
+    setInputFunds2((prevInputValues) => {
+      const newInputValues = [...prevInputValues];
+      newInputValues[index].value = value;
+      return newInputValues;
+    });
+  };
 
+  const [isScrollingUp, setIsScrollingUp] = useState(false);
 
-   useEffect(() => {
-     let prevScrollPos = window.scrollY;
+  useEffect(() => {
+    let prevScrollPos = window.scrollY;
 
-     const handleScroll = () => {
-       const currentScrollPos = window.scrollY;
-       setIsScrollingUp(currentScrollPos < prevScrollPos);
-       prevScrollPos = currentScrollPos;
-     };
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      setIsScrollingUp(currentScrollPos < prevScrollPos);
+      prevScrollPos = currentScrollPos;
+    };
 
-     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-     return () => window.removeEventListener("scroll", handleScroll);
-   }, []);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -126,7 +157,7 @@ const Campaign = () => {
                 </div>
               </div>
               <div className="sm-custom:mx-[30px] mt-[23px] sm-custom:mt-[43px] mx-0">
-                <div className="sm-custom:h-[252px] sm-custom:w-[776px] w-[350px]  mb-[34px] border-[2px] flex mx-auto  border-[#00EF8B] p-[8px] ">
+                <div className="sm-custom:h-[252px] sm-custom:w-[776px] md-custom:w-[500px] w-[350px] lg:w-[776px]   mb-[34px] border-[2px] flex mx-auto  border-[#00EF8B] p-[8px] ">
                   <div className="flex flex-col  mx-auto">
                     {inputFunds.map((input, index) => (
                       <div
@@ -143,19 +174,20 @@ const Campaign = () => {
                           <input
                             id={`inputField-${index}`}
                             value={input.value}
-                            readOnly
-                            placeholder={input.value}
+                            type={input.type}
+                            placeholder={input.placeholder}
+                            onWheel={(e) => e.preventDefault()}
                             onChange={(e) =>
                               handleInputChange(index, e.target.value)
                             }
                             className="w-[100%] mx-2 outline-none"
                           />
-                          <button
+                          {/* <button
                             className="mx-2"
                             onClick={() => handleCopyClick(index)}
                           >
                             <FiCopy />
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     ))}
@@ -173,7 +205,7 @@ const Campaign = () => {
                 </h2>
               </div>
               <div className="sm-custom:mx-[30px] mt-[23px] sm-custom:mt-[43px] mx-0">
-                <div className="sm-custom:h-[252px] sm-custom:w-[776px] w-[350px]  mb-[34px] border-[2px] flex mx-auto  border-[#00EF8B] p-[8px] ">
+                <div className="sm-custom:h-[252px] sm-custom:w-[776px] md-custom:w-[500px] w-[350px] lg:w-[776px]  mb-[34px] border-[2px] flex mx-auto  border-[#00EF8B] p-[8px] ">
                   <div className="flex flex-col  mx-auto">
                     {inputFunds2.map((input, index) => (
                       <div
@@ -190,23 +222,23 @@ const Campaign = () => {
                           <input
                             id={`inputField-${index}`}
                             value={input.value}
-                            readOnly
-                            placeholder={input.value}
+                            type={input.type}
+                            placeholder={input.placeholder}
+                            onWheel={(e) => e.preventDefault()}
                             onChange={(e) =>
-                              handleInputChange(index, e.target.value)
+                              handleInputChange2(index, e.target.value)
                             }
                             className="w-[100%] mx-2 outline-none"
                           />
-                          <button
+                          {/* <button
                             className="mx-2"
                             onClick={() => handleCopyClick(index)}
                           >
                             <FiCopy />
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     ))}
-                   
                   </div>
                 </div>
               </div>

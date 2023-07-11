@@ -13,17 +13,32 @@ const Description = () => {
   const [isScrollingUp, setIsScrollingUp] = useState(false);
 
   const initialValues = [
-    { type: "email", label: "Email", value: "example@example.com" },
-    { type: "website", label: "Website", value: "https://example.com" },
-    { type: "phone", label: "Phone Number", value: "+1234567890" },
-    { type: "address", label: "Address", value: "123 Street, City" },
-    { type: "social-media", label: "Social Media", value: "@example" },
+    { type: "email", label: "Email", example: "example@example.com" },
+    { type: "website", label: "Website", example: "https://example.com" },
+    { type: "phone", label: "Phone Number", example: "+1234567890" },
+    { type: "address", label: "Address", example: "123 Street, City" },
+    { type: "social-media", label: "Social Media", example: "@example" },
   ];
 
   const initialFunds = [
-    { type: "number", label: "funding amount", value: "$FLOW 100,000" },
-    { type: "text", label: "Funder’s name", value: "Abdulsalam Ibrahim" },
-    { type: "email", label: "Contact", value: "example@example.com" },
+    {
+      type: "number",
+      label: "Funding amount",
+      value: "",
+      placeholder: "$FLOW 200,000",
+    },
+    {
+      type: "text",
+      label: "Funder’s name",
+      value: "",
+      placeholder: "Abdulsalam Ibrahim",
+    },
+    {
+      type: "email",
+      label: "Contact",
+      value: "",
+      placeholder: "example@example.com",
+    },
   ];
 
   const [inputValues, setInputValues] = useState(initialValues);
@@ -31,7 +46,7 @@ const Description = () => {
   const [showNotification, setShowNotification] = useState(false);
 
   const handleCopyClick = (index) => {
-    const valueToCopy = inputValues[index].value;
+    const valueToCopy = inputValues[index].example;
     const fundsToCopy = inputFunds[index].value;
     navigator.clipboard.writeText(valueToCopy);
     navigator.clipboard.writeText(fundsToCopy);
@@ -41,12 +56,27 @@ const Description = () => {
     }, 2000);
   };
 
-  const handleInputChange = (index, value) => {
+  const handleInputChange2 = (index, example) => {
     setInputValues((prevInputValues) => {
       const newInputValues = [...prevInputValues];
-      newInputValues[index] = value;
+      newInputValues[index] = example;
       return newInputValues;
     });
+  };
+
+  const handleInputChange = (index, value) => {
+    setInputFunds((prevInputValues) => {
+      const newInputValues = [...prevInputValues];
+      newInputValues[index].value = value;
+      return newInputValues;
+    });
+  }
+
+  const handleSubmit = () => {
+    // Perform your desired actions with the inputFunds data
+    console.log(inputFunds);
+    // Reset the form if needed
+    setInputFunds(initialFunds);
   };
 
   const handleFileChange = (index, files) => {
@@ -129,8 +159,8 @@ const Description = () => {
         <div className="w-[100%] lg:py-[54px] lg:px-[80px] py-[20px] px-[12px] flex flex-col">
           <div className="flex flex-col lg:mt-[12px] mt-[18px]   gap-y-[12px]">
             <div className="w-[100%]  ">
-              <div className="lg:mx-[169px] mx-0">
-                <div className="lg:h-[252px] lg:w-[776px] w-[450px]  mb-[34px] border-[2px] flex mx-auto  border-[#00EF8B] p-[8px] ">
+              <div className="lg:mx-[169px] mt-5 mx-0">
+                <div className="lg:h-[252px] lg:w-[776px] sm-custom:w-[450px]   mb-[34px] border-[2px] flex lg:mx-auto md-custom:mx-auto  border-[#00EF8B] p-[8px] ">
                   <div className="flex flex-col  mx-auto">
                     {inputFunds.map((input, index) => (
                       <div
@@ -138,7 +168,7 @@ const Description = () => {
                         className=" grid grid-cols-2 lg:w-[80%] w-[100%] lg:items-center gap-x-0 items-center space-y-3  "
                       >
                         <label
-                          className=" text-[#6B717B] text-2xl lg:ml-7 lg:mr-10 mt-3 font-semibold text-start"
+                          className=" text-[#6B717B] lg:text-2xl text-base lg:ml-7 ml-2 lg:mr-10 mr-2 mt-3 font-semibold text-start"
                           htmlFor={`inputField-${index}`}
                         >
                           {input.label}
@@ -147,19 +177,14 @@ const Description = () => {
                           <input
                             id={`inputField-${index}`}
                             value={input.value}
-                        
-                            placeholder={input.value}
+                            type={input.type}
+                            required
+                            placeholder={input.placeholder}
                             onChange={(e) =>
                               handleInputChange(index, e.target.value)
                             }
                             className="w-[100%] mx-2 outline-none"
                           />
-                          <button
-                            className="mx-2"
-                            onClick={() => handleCopyClick(index)}
-                          >
-                            <FiCopy />
-                          </button>
                         </div>
                       </div>
                     ))}
@@ -179,7 +204,10 @@ const Description = () => {
                   </p>
                   <div className="flex justify-center lg:mt-0 mt-2 lg:ml-[40px] ml-[10px]">
                     <div className="">
-                      <button className="text-center text-black font-semibold lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]">
+                      <button
+                        className="text-center text-black font-semibold lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]"
+                        onClick={handleSubmit}
+                      >
                         Fund
                       </button>
                     </div>
@@ -238,24 +266,24 @@ const Description = () => {
                 {renderUploadItem(3, "picture4.jpg")}
               </div>
               <div className="copy-inputs">
-                {inputValues.map((input, index) => (
+                {inputValues.map((input, index, example) => (
                   <div
-                    key={index}
-                    className="grid grid-cols-2  mx-[242px] mb-[31px] "
+                    key={example}
+                    className="sm-custom:grid sm-custom:grid-cols-2 flex flex-col lg:grid lg:grid-cols-2 lg:mx-[242px]  sm-custom:mx-[242px] md-custom:mx-[102px] mx-[50px] mb-[31px] "
                   >
                     <label
                       className="flex items-start text-start"
-                      htmlFor={`inputField-${index}`}
+                      htmlFor={`inputField-${example}`}
                     >
                       {input.label}
                     </label>
-                    <div className="flex w-[430px] justify-between border-2 border-[#00EF8B]">
+                    <div className="flex sm-custom:w-[430px] md-custom:w-[302px] w-[300px] justify-between border-2 border-[#00EF8B]">
                       <input
-                        id={`inputField-${index}`}
+                        id={`inputField-${example}`}
                         type="text"
-                        value={input.value}
+                        value={input.example}
                         onChange={(e) =>
-                          handleInputChange(index, e.target.value)
+                          handleInputChange2(index, e.target.example)
                         }
                         readOnly
                         className="w-[100%] mx-2 outline-none"

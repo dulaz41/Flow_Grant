@@ -76,7 +76,7 @@ const Proposals = () => {
                             <div className="flex sm-custom:w-[3298px] w-[3000px]  gap-4">
                                 {projects.map((project) => (
                                     <div key={project.id} className='bg-[#BCD7CB] p-[50px]   overflow-hidden w-auto ' >
-                                        <div className='sm-custom:w-[760px] w-[300px] sm-custom:h-[390px] h-[260px] '>
+                                        <div className='sm-custom:w-[760px] w-[300px] sm-custom:h-[390px] md-custom:h-[200px] lg:h-[390px]  h-[250px] '>
                                             <div className='flex justify-between '>
                                                 <div className="space-x-6 flex items-center ">
                                                     <Image src={user} alt="" className="lg:h-[120px] mt-1 h-[50px] w-[50px] lg:w-[120px]" />
@@ -126,7 +126,7 @@ const Proposals = () => {
                                         <p className='text-[#303030] lg:text-2xl text-sm'>{project.description}</p>
                                     </div>
                                     <div className='flex justify-end  items-end'>
-                                        <Link href="/proposal" legacyBehavior passHref>
+                                        <Link href="/project" legacyBehavior passHref>
                                             <a className='text-center text-black font-semibold lg:py-[10px] cursor-pointer p-2 lg:px-[30px] bg-[#00EF8B] text-[20px] lg:text-[30px]'>View</a>
                                         </Link>
                                     </div>
