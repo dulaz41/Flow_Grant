@@ -1,6 +1,6 @@
 {
 	"networks": {
-		"emulator": "127.0.0.1:3569",
+		"emulator": "127.0.0.1:8888",
 		"mainnet": "access.mainnet.nodes.onflow.org:9000",
 		"sandboxnet": "access.sandboxnet.nodes.onflow.org:9000",
 		"testnet": "access.devnet.nodes.onflow.org:9000"
@@ -12,7 +12,7 @@
 		},
 		"my-testnet-account": {
 			"address": "0x87a223d6f50ca9ed",
-			"key": "PRIVATE_KEY"
+			"key": "017e15f03abd1f6d1e3b1fe1c4f60103b637b6c00a4fa516dac4051cd3eebb5c"
 		}
 	},
 	"contracts": {
@@ -39,9 +39,16 @@
 		}
 	},
 	"deployments": {
+		"emulator": {
+			"my-testnet-account": [
+				"Fgrant",
+				"FungibleToken"
+			]
+		},
 		"testnet": {
 			"my-testnet-account": [
-				"Fgrant"
+				"Fgrant",
+				"FungibleToken"
 			]
 		}
 	}
