@@ -3,23 +3,27 @@ import Image from 'next/image';
 import React, { useState, ChangeEvent, FormEvent, MouseEvent, useEffect } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import logo from "../public/images/logo.png";
+import AWS from 'aws-sdk';
+import { v4 as uuidv4 } from 'uuid';
 
 
+
+require('dotenv').config();
 
 const SubmitProposal: React.FC = () => {
 
     const [formData, setFormData] = useState<{
         name: string;
         email: string;
-         file: File | null;
+        file: File | null;
         description: string;
         message: string;
         website: string;
         socialmedia: string;
         location: string;
         amount: string;
-     
-         }>({
+
+    }>({
 
         name: '',
         description: '',
@@ -33,8 +37,6 @@ const SubmitProposal: React.FC = () => {
     });
 
     const [passwordError, setPasswordError] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [fileError, setFileError] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -65,23 +67,45 @@ const SubmitProposal: React.FC = () => {
 
     const handleDeleteFile = () => {
         setSelectedFile(null);
+        setFormData({ ...formData, file: null });
     };
 
-
-    // const toggleShowPassword = () => {
-    //     setShowPassword(!showPassword);
-    // };
-
-    // const toggleShowConfirmPassword = () => {
-    //     setShowConfirmPassword(!showConfirmPassword);
-    // };
-
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-      
-        
+
+        // Configure AWS SDK credentials
+        AWS.config.update({
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+        });
+
+        // Upload the image to S3
+        // Upload the image to S3
+        if (selectedFile) {
+            const s3 = new AWS.S3();
+            const key = `photos/${selectedFile.name}`; // Set the desired key with a prefix
+            const params = {
+                Bucket: 'flowgrant',
+                Key: key,
+                Body: selectedFile,
+                // ACL: 'public-read'
+            };
+
+            try {
+                await s3.upload(params).promise();
+                console.log('Image uploaded successfully.');
+            } catch (error) {
+                console.error('Error uploading image to S3:', error);
+            }
+        }
+
+
+
+
+
         // Handle form submission logic here
         console.log(formData);
+
         // Reset the form
         setFormData({
             name: '',
@@ -93,10 +117,14 @@ const SubmitProposal: React.FC = () => {
             socialmedia: '',
             amount: '',
             file: null
-
         });
+
         setPasswordError(false);
+        setSelectedFile(null);
+
     };
+
+
 
     const [isScrollingUp, setIsScrollingUp] = useState(false);
     useEffect(() => {
@@ -289,8 +317,8 @@ const SubmitProposal: React.FC = () => {
                                     )}
                                     {fileError && <p className="text-red-500 text-sm mt-1">Invalid file or file size exceeded.</p>}
                                 </div>
-            
-                                
+
+
                                 <div className='flex items-center mt-[50px] mb-[20px] justify-center'>
                                     <button
                                         type="submit"
