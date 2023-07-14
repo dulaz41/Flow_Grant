@@ -1,3 +1,5 @@
+import FungibleToken from 0x058eff19c094b6de
+
 pub contract Fgrant {
 
     pub var proposals: {UInt64: ProposalDetails}
@@ -5,8 +7,6 @@ pub contract Fgrant {
 
     pub var pools: {UInt64: [PoolDetails]}
     pub var poolCounter: UInt64
-
-    //pub var  token : @FlowToken.Vault
 
     pub event ProposalCreated(
         from: Address?, name: String, projectName: String, description: String, amount: UFix64
@@ -36,7 +36,7 @@ pub contract Fgrant {
     )
 
     pub struct ProposalDetails {
-        pub var id: UInt64
+        pub(set) var id: UInt64
         pub var proposer: Address?
         pub var name: String
         pub var projectName: String
@@ -79,36 +79,30 @@ pub contract Fgrant {
        access(contract) fun createProposal(_proposer: Address, _name: String, _projectName: String, _coverDescription: String, _projectDescription: String, _fundingGoal: UFix64): UInt64
        pub fun fundProposal(proposalID: UInt64, amount: @FungibleToken.Vault)
        pub fun withdrawProposalFund(id: UInt64)
-       pub fun getAllProposals(): ProposalDetails
+       pub fun getProposals(): ProposalDetails
     }
     
     pub resource ProposalRes: ProposalTransact {
+        //pub var balance: UFix64
         access(self) var proposal: ProposalDetails
-        access(contract) var token: @FungibleToken.Vault?
+        access(contract) var token: Capability<&{FungibleToken.Receiver}>
         access(self) var pool: PoolDetails
 
 
-        init(id: UInt64, proposer: Address?, name: String, projectName: String, coverDescription : String, projectDescription: String, fundingGoal: UFix64, token: @FungibleToken.Vault?, pool: PoolDetails){
-           self.proposal = ProposalDetails(
-            id : id,
-            proposer : proposer,
-            name : name,
-            projectName : projectName,
-            coverDescription : coverDescription,
-            projectDescription : projectDescription,
-            fundingGoal : fundingGoal,
-            )
-            self.token <- token
+        init(proposal: ProposalDetails, token: Capability<&{FungibleToken.Receiver}>, pool: PoolDetails/*, balance: UFix64*/){
+           //self.balance = balance
+            self.proposal = proposal
+            self.token = token
             self.pool = pool
-
         }
 
         access(contract) fun createProposal(_proposer: Address, _name: String, _projectName: String, _coverDescription: String, _projectDescription: String, _fundingGoal: UFix64): UInt64  {
             Fgrant.proposalCounter = Fgrant.proposalCounter + 1
-            let proposalID = Fgrant.proposalCounter
+            self.proposal.id = Fgrant.proposalCounter
 
-            Fgrant.proposals[proposalID] = ProposalDetails(id: proposalID, proposer: _proposer, name: _name, projectName: _projectName, coverDescription: _coverDescription, projectDescription: _projectDescription, fundingGoal: _fundingGoal)
-            return proposalID
+            self.proposal = ProposalDetails(id: self.proposal.id, proposer: _proposer, name: _name, projectName: _projectName, coverDescription: _coverDescription, projectDescription: _projectDescription, fundingGoal: _fundingGoal)
+            let propose = self.proposal
+            return propose.id
         }
 
         pub fun fundProposal(proposalID: UInt64, amount: @FungibleToken.Vault){
@@ -119,9 +113,10 @@ pub contract Fgrant {
             if !self.proposal.fundingCompleted { 
                 panic("Project funding is already completed")
             }
-            self.token?.deposit(from: <- amount)
-            //self.proposal.totalFunds =  amount as UFix64
+            let vaultRef = self.token.borrow() ?? panic("could not borrow reference to owner token vault")
+            vaultRef.deposit(from: <- amount)
             
+            self.proposal.totalFunds = self.proposal.totalFunds
             self.proposal.funder.append(self.owner!.address)
             if self.proposal.totalFunds >= self.proposal.fundingGoal {
                 self.proposal.fundingCompleted = true
@@ -161,8 +156,9 @@ pub contract Fgrant {
 
             Fgrant.poolCounter = Fgrant.poolCounter + 1
             let poolID = Fgrant.poolCounter
-            self.token?.deposit(from: <- amount)
-            self.pool = PoolDetails(id: poolID, proposalId: proposalId, creator: self.owner!.address, amount: amount)
+            let vaultRef = self.token.borrow() ?? panic("could not borrow reference to owner token vault")
+            vaultRef.deposit(from: <- amount)
+            //self.pool = PoolDetails(id: poolID, proposalId: proposalId, creator: self.owner!.address, amount: amount.balance)
             return poolID
         }
 
@@ -171,20 +167,19 @@ pub contract Fgrant {
             self.pool.amount = self.pool.amount + amount
         }*/
 
-
-        pub fun getAllProposals(): ProposalDetails {
+        pub fun getProposals(): ProposalDetails {
             return self.proposal
         }
 
         pub fun getProposal(proposalId: UInt64): &ProposalDetails? {
-        return &Fgrant.proposals[proposalId] as &ProposalDetails?
-        }
-
-        destroy(){
-             destroy self.token     
+            return &Fgrant.proposals[proposalId] as &ProposalDetails?
         }
 
         
+    }
+    
+    pub fun createEmptyVault(proposal:ProposalDetails, token: Capability<&{FungibleToken.Receiver}>, pool: PoolDetails): @Fgrant.ProposalRes {
+        return <- create ProposalRes(proposal: proposal, token: token, pool: pool )
     }
 
     init() {

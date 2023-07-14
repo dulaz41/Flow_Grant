@@ -11,8 +11,8 @@
 			"key": "3ac4a555593845b55f4c9da899a0a1b369224de78dd649843c7db0308e8d2e28"
 		},
 		"my-testnet-account": {
-			"address": "0x87a223d6f50ca9ed",
-			"key": "017e15f03abd1f6d1e3b1fe1c4f60103b637b6c00a4fa516dac4051cd3eebb5c"
+			"address": "0x058eff19c094b6de",
+			"key": "411a72254172d5ddffe207f9d9274e1f052cc99af0a69e1ce3da478c19a94eda"
 		}
 	},
 	"contracts": {
@@ -20,21 +20,21 @@
 			"source": "./flow/cadence/contracts/FungibleToken.cdc",
 			"aliases": {
 				"emulator": "f8d6e0586b0a20c7",
-				"testnet": "0x87a223d6f50ca9ed"
+				"testnet": "0x058eff19c094b6de"
 			}
 		},
 		"FlowToken": {
 			"source": "./flow/cadence/contracts/FlowToken.cdc",
 			"aliases": {
 				"emulator": "f8d6e0586b0a20c7",
-				"testnet": "0x87a223d6f50ca9ed"
+				"testnet": "0x058eff19c094b6de"
 			}
 		},
 		"Fgrant": {
 			"source": "./flow/cadence/contracts/Fgrant.cdc",
 			"aliases": {
 				"emulator": "f8d6e0586b0a20c7",
-				"testnet": "0x87a223d6f50ca9ed"
+				"testnet": "0x058eff19c094b6de"
 			}
 		}
 	},
