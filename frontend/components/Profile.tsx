@@ -3,7 +3,8 @@ import React, { useState, ChangeEvent, FormEvent, MouseEvent, useEffect } from '
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import logo from "../public/images/logo.png";
 import Image from 'next/image';
-
+import * as fcl from "@onflow/fcl";
+import "../flow/config";
 
 
 
@@ -16,7 +17,7 @@ const Profile = () => {
         MiddleName: string;
         LastName: string;
         email: string;
-        maiden: string;
+        github: string;
         country: string;
         state: string;
         address: string;
@@ -28,7 +29,7 @@ const Profile = () => {
 
         FirstName: '',
         LastName: '',
-        maiden:'',
+        github:'',
         MiddleName:'',
         email: '',
         country: '',
@@ -84,12 +85,58 @@ const Profile = () => {
         setSubmittedData({ ...formData });
 
         // Handle form submission logic here
+        const addProfile = async () => {
+        const wallet = await fcl.logIn();
+        console.log({ wallet });
+        console.log(wallet.addr);
+        console.log(
+            {
+                "walletAddress": `${wallet.addr}`,
+                "FirstName": `${formData.FirstName}`,
+                "MiddleName": `${formData.MiddleName}`,
+                "LastName": `${formData.LastName}`,
+                "email": `${formData.email}`,
+                "GitHub": `${formData.github}`,
+                "country": `${formData.country}`,
+                "state":   `${formData.state}`,
+                "address": `${formData.address}`,
+                "phone": `${formData.phone}`
+        }
+        );
+
+        await fetch('http://16.170.224.207/profile', {
+            method: 'POST',
+            body: JSON.stringify({
+                    "walletAddress": `${wallet.addr}`,
+                    "FirstName": `${formData.FirstName}`,
+                    "MiddleName": `${formData.MiddleName}`,
+                    "LastName": `${formData.LastName}`,
+                    "email": `${formData.email}`,
+                    "GitHub": `${formData.github}`,
+                    "country": `${formData.country}`,
+                    "state":   `${formData.state}`,
+                    "address": `${formData.address}`,
+                    "phone": `${formData.phone}`
+            }),
+            headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            },
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((err) => {
+            console.log(err.message);
+            });
+        }
         console.log(formData);
+        addProfile();
         // Reset the form
         setFormData({
             FirstName: '',
             LastName: '',
-            maiden: '',
+            github: '',
             MiddleName: '',
             email: '',
             country: '',
@@ -103,7 +150,7 @@ const Profile = () => {
     };
 
 
-    useEffect(() => {
+    useEffect( () => {
         let prevScrollPos = window.scrollY;
 
         const handleScroll = () => {
@@ -113,6 +160,17 @@ const Profile = () => {
         };
 
         window.addEventListener("scroll", handleScroll);
+        // const wallet = await fcl.logIn();
+        // console.log({ wallet });
+        // console.log(wallet.addr);
+        // fetch(`http://16.170.224.207/profile/${wallet.addr}`)
+        //  .then((response) => response.json())
+        //  .then((data) => {
+        //     console.log(data);
+        //  })
+        //  .catch((err) => {
+        //     console.log(err.message);
+        //  });
 
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
@@ -226,11 +284,11 @@ const Profile = () => {
                                     {/* <label htmlFor="message" className="block mb-1 font-semibold">Message</label> */}
                                     <input
                                         type="text"
-                                        id="maiden"
-                                        name="maiden"
-                                        value={formData.maiden}
+                                        id="github"
+                                        name="github"
+                                        value={formData.github}
                                         onChange={handleChange}
-                                        placeholder='Mother’s maiden name'
+                                        placeholder='Github Profile'
                                         className="border-b-2 border-gray-300 px-4 py-2 outline-none rounded-md w-full"
                                         required
                                     />
