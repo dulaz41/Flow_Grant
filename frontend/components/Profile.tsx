@@ -75,19 +75,34 @@ const Profile = () => {
         const wallet = await fcl.logIn();
         console.log({ wallet });
         console.log(wallet.addr);
+        console.log(
+            {
+                "walletAddress": `${wallet.addr}`,
+                "FirstName": `${formData.FirstName}`,
+                "MiddleName": `${formData.MiddleName}`,
+                "LastName": `${formData.LastName}`,
+                "email": `${formData.email}`,
+                "GitHub": `${formData.github}`,
+                "country": `${formData.country}`,
+                "state":   `${formData.state}`,
+                "address": `${formData.address}`,
+                "phone": `${formData.phone}`
+        }
+        );
+
         await fetch('http://16.170.224.207/profile', {
             method: 'POST',
             body: JSON.stringify({
-                    "walletAddress": "string",
+                    "walletAddress": `${wallet.addr}`,
                     "FirstName": `${formData.FirstName}`,
-                    "MiddleName": "string",
-                    "LastName": "string",
-                    "email": "string",
-                    "GitHub": "string",
-                    "country": "string",
-                    "state": "string",
-                    "address": "string",
-                    "phone": "string"
+                    "MiddleName": `${formData.MiddleName}`,
+                    "LastName": `${formData.LastName}`,
+                    "email": `${formData.email}`,
+                    "GitHub": `${formData.github}`,
+                    "country": `${formData.country}`,
+                    "state":   `${formData.state}`,
+                    "address": `${formData.address}`,
+                    "phone": `${formData.phone}`
             }),
             headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -102,6 +117,7 @@ const Profile = () => {
             });
         }
         console.log(formData);
+        addProfile();
         // Reset the form
         setFormData({
             FirstName: '',
