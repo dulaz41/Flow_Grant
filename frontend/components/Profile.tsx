@@ -44,6 +44,17 @@ const Profile = () => {
     const [passwordError, setPasswordError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [submittedData, setSubmittedData] = useState<{
+        FirstName: string;
+        MiddleName: string;
+        LastName: string;
+        email: string;
+        maiden: string;
+        country: string;
+        state: string;
+        address: string;
+        phone: string;
+    } | null>(null);
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +79,9 @@ const Profile = () => {
             setPasswordError(true);
             return;
         }
+
+        // Simulating form submission success
+        setSubmittedData({ ...formData });
 
         // Handle form submission logic here
         console.log(formData);
@@ -133,6 +147,29 @@ const Profile = () => {
                     <div className="flex flex-col lg:mt-[12px] mt-[18px]  gap-y-[12px]">
                         <div className="lg:h-[980px] w-[100%] border-[2px]  lg:px-[30px] lg:py-[20px] justify-between  border-[#00EF8B] p-[8px] ">
                             <h1 className="text-[40px] text-center text-[#00EF8B] font-extrabold mb-4">Create profile</h1>
+                            {submittedData ? (
+                                <div className="flex items-center mt-6 justify-center">
+                                    <p className="text-green-500">Form submitted successfully!</p>
+                                    <button
+                                        className="ml-2 text-green-500 focus:outline-none"
+                                        onClick={() => setSubmittedData(null)}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            className="w-4 h-4"
+                                        >
+                                            <line x1="18" y1="6" x2="6" y2="18" />
+                                            <line x1="6" y1="6" x2="18" y2="18" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            ) : (
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-4">
                                     {/* <label htmlFor="name" className="block mb-1 font-semibold">Name</label> */}
@@ -321,7 +358,7 @@ const Profile = () => {
                                     </button>
                                 </div>
                             </form>
-
+                            )}
                         </div>
                     </div>
                 </div>
