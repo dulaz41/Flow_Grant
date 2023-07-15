@@ -72,11 +72,14 @@ const Profile = () => {
 
         // Handle form submission logic here
         const addProfile = async () => {
+        const wallet = await fcl.logIn();
+        console.log({ wallet });
+        console.log(wallet.addr);
         await fetch('http://16.170.224.207/profile', {
             method: 'POST',
             body: JSON.stringify({
                     "walletAddress": "string",
-                    "FirstName": "string",
+                    "FirstName": `${formData.FirstName}`,
                     "MiddleName": "string",
                     "LastName": "string",
                     "email": "string",
