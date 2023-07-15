@@ -1,20 +1,27 @@
-import FGrant from f8d6e0586b0a20c7
+import FGrant from 0x058eff19c094b6de
+import FungibleToken from 0x058eff19c094b6de
 
 transaction {
+  prepare(signer: AuthAccount) {
+    let proposalCreator = signer.address
+    let name = "Sample Proposal"
+    let projectName = "Project A"
+    let coverDescription = "Cover Description"
+    let projectDescription = "Project Description"
+    let fundingGoal: UFix64 = 100.0
 
-    prepare(acct: AuthAccount) {
+    let capability = signer.getCapability<&Fgrant.ProposalRes>(/public/fgrantProposalRes)
+    let proposalRes = capability.borrow() ?? panic("Could not borrow proposal transact reference")
 
-        let proposalResource <- acct.load<@FGrant.Proposal>(from: /storage/FGrant)
-        let poolResource <- acct.load<@FGrant.Pool>(from: /storage/FGrant)
+    let proposalID = proposalRes.createProposal(
+      proposer: proposalCreator,
+      name: name,
+      projectName: projectName,
+      coverDescription: coverDescription,
+      projectDescription: projectDescription,
+      fundingGoal: fundingGoal
+    )
 
-        log(proposalResource?.details)
-        log(poolResource?.details)
-
-        acct.save(<-proposalResource!, to: /storage/FGrant)
-        acct.save(<-poolResource!, to: /storage/FGrant)
-    }
-
-    execute(){
-        
-    }
+    log("Proposal created with ID")
+  }
 }
