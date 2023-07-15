@@ -1,5 +1,4 @@
-import FungibleToken from 0x01
-//import FlowToken from 0x01
+import FungibleToken from 0x058eff19c094b6de
 
 pub contract Fgrant {
 
