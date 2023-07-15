@@ -85,10 +85,10 @@ const SubmitProposal: React.FC = () => {
             const s3 = new AWS.S3();
             const key = `photos/${selectedFile.name}`; // Set the desired key with a prefix
             const params = {
-                Bucket: 'flowgrant',
+                Bucket: 'flowgrantnew',
                 Key: key,
                 Body: selectedFile,
-                // ACL: 'public-read'
+                ACL: 'public-read'
             };
 
             try {
