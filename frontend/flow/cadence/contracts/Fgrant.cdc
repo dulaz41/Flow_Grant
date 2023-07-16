@@ -89,11 +89,14 @@ pub contract Fgrant {
        pub fun fundPool(poolId: UInt64, amount: @FungibleToken.Vault)
        pub fun withdrawProposalFund(id: UInt64): @FungibleToken.Vault
        pub fun getProposals(): ProposalDetails
+       pub fun getProposalById(proposalId: UInt64): &ProposalDetails?
+       pub fun getPool(poolId: UInt64): &PoolDetails?
     }
     
     pub resource interface ProposalPrivate {
        pub fun withdraw(receiver:Capability<&{FungibleToken.Receiver}>,amount:UFix64)
     }
+
     pub resource ProposalRes: ProposalPublic, ProposalPrivate {
         pub var balance: UFix64
         pub var withdrawn: UFix64
@@ -150,11 +153,9 @@ pub contract Fgrant {
         pub fun createPool(proposalId: UInt64, amount: @FungibleToken.Vault){
             Fgrant.poolCounter = Fgrant.poolCounter + 1
             let poolID = Fgrant.poolCounter
-            // Check if the proposal exists
             if self.proposal.id != proposalId { 
                  panic("Invalid proposal ID")
             }
-            // Check if funding is completed
             if self.proposal.fundingCompleted { 
                 panic("Project funding is already completed")
             }
