@@ -160,17 +160,21 @@ const Profile = () => {
         };
 
         window.addEventListener("scroll", handleScroll);
-        // const wallet = await fcl.logIn();
-        // console.log({ wallet });
-        // console.log(wallet.addr);
-        // fetch(`http://16.170.224.207/profile/${wallet.addr}`)
-        //  .then((response) => response.json())
-        //  .then((data) => {
-        //     console.log(data);
-        //  })
-        //  .catch((err) => {
-        //     console.log(err.message);
-        //  });
+        async function getProfile() {
+            const wallet = await fcl.logIn();
+        console.log({ wallet });
+        console.log(wallet.addr);
+        fetch(`http://16.170.224.207/profile/${wallet.addr}`)
+         .then((response) => response.json())
+         .then((data) => {
+            console.log(data);
+         })
+         .catch((err) => {
+            console.log(err.message);
+         });
+        }
+
+        getProfile();
 
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
