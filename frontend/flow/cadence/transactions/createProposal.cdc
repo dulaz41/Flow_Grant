@@ -1,20 +1,14 @@
 import FGrant from 0x058eff19c094b6de
 import FungibleToken from 0x058eff19c094b6de
 
-transaction {
-  prepare(signer: AuthAccount) {
-    let proposalCreator = signer.address
-    let name = "Sample Proposal"
-    let projectName = "Project A"
-    let coverDescription = "Cover Description"
-    let projectDescription = "Project Description"
-    let fundingGoal: UFix64 = 100.0
+transaction (proposer: Address, name: String, projectName: String, coverDescription: String, projectDescription: String, fundingGoal: UFix64){
+  prepare(acct: AuthAccount) {
 
-    let capability = signer.getCapability<&Fgrant.ProposalRes>(/public/fgrantProposalRes)
-    let proposalRes = capability.borrow() ?? panic("Could not borrow proposal transact reference")
-
+    let proposalRes = acct.borrow<&Fgrant.ProposalRes>(from: Fgrant.FgrantStoragePath) 
+                            ?? panic("Proposal Resourse does not exist")
+    
     let proposalID = proposalRes.createProposal(
-      proposer: proposalCreator,
+      proposer: proposer,
       name: name,
       projectName: projectName,
       coverDescription: coverDescription,
@@ -22,6 +16,10 @@ transaction {
       fundingGoal: fundingGoal
     )
 
-    log("Proposal created with ID")
+    log(proposalID)
+  }
+
+  execute {
+      log("Successfully Created Proposal")
   }
 }

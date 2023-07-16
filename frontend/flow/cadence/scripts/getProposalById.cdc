@@ -1,5 +1,6 @@
-import FGrant from 0x87a223d6f50ca9ed
+import Fgrant from 0x6d9cda4dce6218f2
 
-// pub fun main(proposalId: UInt64): UInt64 {
-//     return Fgrant.proposals[proposalId]
-// }
+    pub fun main(proposalId: UInt64): &Fgrant.ProposalDetails? {
+        let contract = getAccount(0x6d9cda4dce6218f2).getCapability(/public/FgrantPublicP).borrow<&Fgrant.ProposalRes{Fgrant.ProposalPublic}>()!
+        return contract.getProposalById(proposalId: proposalId)
+    }
