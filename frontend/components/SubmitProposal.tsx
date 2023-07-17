@@ -6,7 +6,6 @@ import logo from "../public/images/logo.png";
 import AWS from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import * as fcl from "@onflow/fcl";
-import * as t from "@onflow/types"
 
 
 
@@ -76,31 +75,31 @@ const SubmitProposal: React.FC = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        // // Configure AWS SDK credentials
-        // AWS.config.update({
-        //     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        //     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-        // });
+        // Configure AWS SDK credentials
+        AWS.config.update({
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+        });
 
-        // // Upload the image to S3
-        // // Upload the image to S3
-        // if (selectedFile) {
-        //     const s3 = new AWS.S3();
-        //     const key = `photos/${selectedFile.name}`; // Set the desired key with a prefix
-        //     const params = {
-        //         Bucket: 'flowgrantnew',
-        //         Key: key,
-        //         Body: selectedFile,
-        //         ACL: 'public-read'
-        //     };
+        // Upload the image to S3
+        // Upload the image to S3
+        if (selectedFile) {
+            const s3 = new AWS.S3();
+            const key = `photos/${selectedFile.name}`; // Set the desired key with a prefix
+            const params = {
+                Bucket: 'flowgrantnew',
+                Key: key,
+                Body: selectedFile,
+                ACL: 'public-read'
+            };
 
-        //     try {
-        //         await s3.upload(params).promise();
-        //         console.log('Image uploaded successfully.');
-        //     } catch (error) {
-        //         console.error('Error uploading image to S3:', error);
-        //     }
-        // }
+            try {
+                await s3.upload(params).promise();
+                console.log('Image uploaded successfully.');
+            } catch (error) {
+                console.error('Error uploading image to S3:', error);
+            }
+        }
 
 
 
