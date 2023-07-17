@@ -76,7 +76,7 @@ const Dashboard: React.FC<ChartData> = ({ labels, datasets }: ChartData) => {
                         <div className="bg-[#21B074]  lg:px-[21px] py-[40px] px-[20px] lg:m-[24px] mb-0  lg:w-[300px] lg:h-[206px] w-[184px] h-[160px]  ">
                             <div className="flex items-center ml-[4px] ">
                                 <Image src={wallet} alt="" className="lg:h-[32px]  lg:w-[32px] h-[16px] w-[16px] " />
-                                <p className="ml-[20px] text-black text-[14px] font-semibold "><span className="lg:inline-flex hidden">Wallet</span> balance</p>
+                                <p className="ml-[20px] text-black text-[14px] font-semibold "><span className="lg:inline-flex hidden">Wallet</span> Balance</p>
                                 <Image src={line} alt="" className="h-[32px] lg:ml-[74px] ml-[20px] w-[32px]" />
                             </div>
                             <div className="flex flex-col lg:mt-[25px] lg:ml-0 -ml-[12px] items-center">

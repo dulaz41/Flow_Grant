@@ -3,6 +3,8 @@ import React, {useState, useEffect} from 'react'
 import user from "../../public/assets/Ellipse2.png";
 import Link from 'next/link';
 import logo from "../../public/images/logo.png";
+import * as fcl from "@onflow/fcl";
+import { get } from 'http';
 
 
 const projects = [
@@ -29,6 +31,7 @@ const projects = [
 const Project = () => {
 
     const [isScrollingUp, setIsScrollingUp] = useState(false);
+    const [proj, setProj] = useState({})
 
     useEffect(() => {
         let prevScrollPos = window.scrollY;
@@ -38,6 +41,28 @@ const Project = () => {
             setIsScrollingUp(currentScrollPos < prevScrollPos);
             prevScrollPos = currentScrollPos;
         };
+        async function getProposal() {
+            const GET_ALL_PROPS = `
+            import Fgrant from 0x6d9cda4dce6218f2
+
+            pub fun main(): [Fgrant.ProposalDetails] {
+                let propose = getAccount(0x6d9cda4dce6218f2).getCapability(/public/FgrantPublicP).borrow<&Fgrant.ProposalRes{Fgrant.ProposalPublic}>()!
+                return [propose.getProposals()]
+            }`
+            return fcl.query({
+                cadence: GET_ALL_PROPS,
+              });
+        }
+        getProposal()
+        .then((response) => response[0])
+        .then((data) => {
+            console.log(data);
+            setProj(data);
+            console.log(proj);
+         });
+        console.log(proj)
+
+
 
         window.addEventListener("scroll", handleScroll);
 
