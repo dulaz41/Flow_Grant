@@ -89,46 +89,44 @@ const Profile = () => {
         const wallet = await fcl.logIn();
         console.log({ wallet });
         console.log(wallet.addr);
-        console.log(
-            {
-                "walletAddress": `${wallet.addr}`,
-                "FirstName": `${formData.FirstName}`,
-                "MiddleName": `${formData.MiddleName}`,
-                "LastName": `${formData.LastName}`,
-                "email": `${formData.email}`,
-                "GitHub": `${formData.github}`,
-                "country": `${formData.country}`,
-                "state":   `${formData.state}`,
-                "address": `${formData.address}`,
-                "phone": `${formData.phone}`
-        }
-        );
 
-        await fetch('http://16.170.224.207/profile', {
-            method: 'POST',
-            body: JSON.stringify({
-                    "walletAddress": `${wallet.addr}`,
-                    "FirstName": `${formData.FirstName}`,
-                    "MiddleName": `${formData.MiddleName}`,
-                    "LastName": `${formData.LastName}`,
-                    "email": `${formData.email}`,
-                    "GitHub": `${formData.github}`,
-                    "country": `${formData.country}`,
-                    "state":   `${formData.state}`,
-                    "address": `${formData.address}`,
-                    "phone": `${formData.phone}`
-            }),
-            headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-            },
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((err) => {
-            console.log(err.message);
-            });
+        const signMessage = async () => {
+            const MSG = Buffer.from(`Creating Profile for ${wallet.addr}`).toString("hex")
+            try {
+              return await fcl.currentUser.signUserMessage(MSG)
+            } catch (error) {
+              console.log(error)
+            }
+          }
+
+        const res = await signMessage();
+        console.log(res)
+
+        // await fetch('http://16.170.224.207/profile', {
+        //     method: 'POST',
+        //     body: JSON.stringify({
+        //             "walletAddress": `${wallet.addr}`,
+        //             "FirstName": `${formData.FirstName}`,
+        //             "MiddleName": `${formData.MiddleName}`,
+        //             "LastName": `${formData.LastName}`,
+        //             "email": `${formData.email}`,
+        //             "GitHub": `${formData.github}`,
+        //             "country": `${formData.country}`,
+        //             "state":   `${formData.state}`,
+        //             "address": `${formData.address}`,
+        //             "phone": `${formData.phone}`
+        //     }),
+        //     headers: {
+        //     'Content-type': 'application/json; charset=UTF-8',
+        //     },
+        //     })
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         console.log(data);
+        //     })
+        //     .catch((err) => {
+        //     console.log(err.message);
+        //     });
         }
         console.log(formData);
         addProfile();

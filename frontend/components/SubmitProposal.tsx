@@ -5,6 +5,9 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import logo from "../public/images/logo.png";
 import AWS from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
+import * as fcl from "@onflow/fcl";
+import * as t from "@onflow/types"
+
 
 
 
@@ -73,38 +76,126 @@ const SubmitProposal: React.FC = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        // Configure AWS SDK credentials
-        AWS.config.update({
-            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-        });
+        // // Configure AWS SDK credentials
+        // AWS.config.update({
+        //     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        //     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+        // });
 
-        // Upload the image to S3
-        // Upload the image to S3
-        if (selectedFile) {
-            const s3 = new AWS.S3();
-            const key = `photos/${selectedFile.name}`; // Set the desired key with a prefix
-            const params = {
-                Bucket: 'flowgrantnew',
-                Key: key,
-                Body: selectedFile,
-                ACL: 'public-read'
-            };
+        // // Upload the image to S3
+        // // Upload the image to S3
+        // if (selectedFile) {
+        //     const s3 = new AWS.S3();
+        //     const key = `photos/${selectedFile.name}`; // Set the desired key with a prefix
+        //     const params = {
+        //         Bucket: 'flowgrantnew',
+        //         Key: key,
+        //         Body: selectedFile,
+        //         ACL: 'public-read'
+        //     };
 
-            try {
-                await s3.upload(params).promise();
-                console.log('Image uploaded successfully.');
-            } catch (error) {
-                console.error('Error uploading image to S3:', error);
-            }
+        //     try {
+        //         await s3.upload(params).promise();
+        //         console.log('Image uploaded successfully.');
+        //     } catch (error) {
+        //         console.error('Error uploading image to S3:', error);
+        //     }
+        // }
+
+
+
+
+        console.log("Starting");
+        // Handle form submission logic here
+        async function createProposal(proposer: any, name: any, projectName: any, coverDescription: any, projectDescription: any, fundingGoal: any) {
+            const CREATE_NEW_PROP = `
+        import Fgrant from 0x058eff19c094b6de
+import FungibleToken from 0x058eff19c094b6de
+
+transaction (proposer: Address, name: String, projectName: String, coverDescription: String, projectDescription: String, fundingGoal: UFix64){
+  prepare(acct: AuthAccount) {
+
+    let proposalRes = acct.borrow<&Fgrant.ProposalRes>(from: Fgrant.FgrantStoragePath) 
+                            ?? panic("Proposal Resourse does not exist")
+    log("Starting create")
+    let proposalID = proposalRes.createProposal(
+      proposer: proposer,
+      name: name,
+      projectName: projectName,
+      coverDescription: coverDescription,
+      projectDescription: projectDescription,
+      fundingGoal: fundingGoal
+    )
+
+    log(proposalID)
+  }
+
+  execute {
+      log("Successfully Created Proposal")
+  }
+} `
+const transactionId = await fcl.mutate({
+            cadence: CREATE_NEW_PROP,
+            args: (arg, t) => [
+              arg(proposer, t.Address),
+              arg(name, t.String),
+              arg(projectName, t.String),
+              arg(coverDescription, t.String),
+              arg(projectDescription, t.String),
+              arg(fundingGoal, t.UFix64),
+            ],
+            payer: fcl.authz,
+            proposer: fcl.authz,
+            authorizations: [fcl.authz],
+            limit: 1000,
+          });
+          fcl.tx(transactionId).subscribe(res => console.log(res))
+
         }
 
-
-
-
-
-        // Handle form submission logic here
+        // const response = await fcl.send([
+        //     fcl.transaction `
+        //       import FGrant from 0xAddressA
+          
+        //       transaction(proposer: Address, name: String, projectName: String, coverDescription: String, projectDescription: String, fundingGoal: UFix64) {
+        //           let proposalID: UInt64
+          
+        //           prepare(signer: AuthAccount) {
+        //               let proposalRes = signer.borrow<&FGrant.ProposalRes>(from: FGrant.FGrantStoragePath)
+        //                   ?? panic("Could not borrow reference to ProposalRes")
+        //   self.proposalID = proposalRes.createProposal(
+        //     _proposer: proposer,
+        //     _name: name,
+        //     _projectName: projectName,
+        //     _coverDescription: coverDescription,
+        //     _projectDescription: projectDescription,
+        //     _fundingGoal: fundingGoal
+        //   )
+        //           }
+          
+        //           execute {
+        //               log("Proposal with ID (self.proposalID) created")
+        //           }
+        //       }`
+        //     ,
+        //     fcl.args([
+        //       fcl.arg("0x6d9cda4dce6218f2", t.Address),
+        //       fcl.arg("Toheeb", t.String),
+        //       fcl.arg("New Project", t.String),
+        //       fcl.arg("Test", t.String),
+        //       fcl.arg("still testing...", t.String),
+        //       fcl.arg(100.0000, t.UFix64),
+        //     ]),
+        //     fcl.proposer(fcl.authz),
+        //     fcl.payer(fcl.authz),
+        //     fcl.authorizations([fcl.authz]),
+        //   ])
+          
+        //   const transactionId = response.transactionId
+        //   console.log({transactionId})
+        
         console.log(formData);
+        await createProposal("0x6d9cda4dce6218f2",formData.name, formData.name, formData.description, formData.message, formData.amount)
 
         // Reset the form
         setFormData({

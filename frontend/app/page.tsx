@@ -34,6 +34,7 @@ export default function Home(): JSX.Element {
   const handleDisconnect = async (): Promise<void> => {
     if (typeof window !== 'undefined') {
       alert('Are you sure you want to disconnect?');
+      fcl.unauthenticate();
       setIsConnected(false);
       setAccount(null);
     }

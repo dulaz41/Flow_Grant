@@ -31,7 +31,7 @@ const projects = [
 const Project = () => {
 
     const [isScrollingUp, setIsScrollingUp] = useState(false);
-    const [proj, setProj] = useState({})
+    const [proj, setProj] = useState([])
 
     useEffect(() => {
         let prevScrollPos = window.scrollY;
@@ -54,7 +54,7 @@ const Project = () => {
               });
         }
         getProposal()
-        .then((response) => response[0])
+        .then((response) => response)
         .then((data) => {
             console.log(data);
             setProj(data);
