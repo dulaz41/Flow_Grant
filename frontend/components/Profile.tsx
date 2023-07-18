@@ -96,6 +96,17 @@ const Profile = () => {
         const wallet = await fcl.logIn();
         // console.log({ wallet });
         // console.log(wallet.addr);
+        const signMessage = async () => {
+            const MSG = Buffer.from(`Creating Profile for ${wallet.addr}`).toString("hex")
+            try {
+                return await fcl.currentUser.signUserMessage(MSG)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        const res = await signMessage();
+        console.log(res)
 
         if (profileExists) {
             // Update the existing profile
