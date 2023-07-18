@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import wallet from '../public/assets/wallet.png';
 import handcash from '../public/assets/handcash.png';
+import wallet1 from '../public/assets/wallet.png';
 import line from '../public/assets/line.png';
 import up from '../public/assets/up.png';
 import up2 from '../public/assets/up2.png';
@@ -13,6 +13,8 @@ import BarChart from "./BarChart";
 import { UserData } from '../Data'
 import { ChartData } from "../interface/interface";
 import logo from "../public/images/logo.png";
+import * as fcl from "@onflow/fcl";
+import "../flow/config";
 
 
 const Dashboard: React.FC<ChartData> = ({ labels, datasets }: ChartData) => {
@@ -28,6 +30,25 @@ const Dashboard: React.FC<ChartData> = ({ labels, datasets }: ChartData) => {
 
     })
     const [isScrollingUp, setIsScrollingUp] = useState(false);
+    const [walletBalance, setWalletBalance] = useState<number>(0);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const wallet = await fcl.logIn();
+
+            console.log({ wallet });
+            // console.log(wallet.addr);
+            const result = await fcl.account(wallet.addr);
+            // console.log({ result });
+            const flowBalance = result.balance / Math.pow(10, 4);
+            // console.log({ flowBalance });
+
+            
+            setWalletBalance(flowBalance);
+        };
+
+        fetchData();
+    }, []);
 
     useEffect(() => {
         let prevScrollPos = window.scrollY;
@@ -75,12 +96,12 @@ const Dashboard: React.FC<ChartData> = ({ labels, datasets }: ChartData) => {
                     <div className="w-[70%]   grid grid-cols-2 gap-4">
                         <div className="bg-[#21B074]  lg:px-[21px] py-[40px] px-[20px] lg:m-[24px] mb-0  lg:w-[300px] lg:h-[206px] w-[184px] h-[160px]  ">
                             <div className="flex items-center ml-[4px] ">
-                                <Image src={wallet} alt="" className="lg:h-[32px]  lg:w-[32px] h-[16px] w-[16px] " />
+                                <Image src={wallet1} alt="" className="lg:h-[32px]  lg:w-[32px] h-[16px] w-[16px] " />
                                 <p className="ml-[20px] text-black text-[14px] font-semibold "><span className="lg:inline-flex hidden">Wallet</span> Balance</p>
                                 <Image src={line} alt="" className="h-[32px] lg:ml-[74px] ml-[20px] w-[32px]" />
                             </div>
                             <div className="flex flex-col lg:mt-[25px] lg:ml-0 -ml-[12px] items-center">
-                                <p className=" text-black lg:text-[18px] text-[15px] text-center font-semibold ">$FLOW 40,689.63</p>
+                                <p className=" text-black lg:text-[18px] text-[15px] text-center font-semibold ">$FLOW {walletBalance}</p>
                             </div>
                             <div className="flex items-center lg:ml-[65px] ml-2 justify-start">
                                 <Image src={up} alt="" className="h-[12px]  w-[12px]" />
@@ -94,7 +115,7 @@ const Dashboard: React.FC<ChartData> = ({ labels, datasets }: ChartData) => {
                                 <Image src={line} alt="" className="h-[32px] lg:ml-[134px] ml-[20px] w-[32px]" />
                             </div>
                             <div className="flex flex-col lg:mt-[25px] lg:ml-0 -ml-[12px] items-center">
-                                <p className=" text-black lg:text-[18px] text-[15px] text-center font-semibold ">$FLOW 500,000</p>
+                                <p className=" text-black lg:text-[18px] text-[15px] text-center font-semibold ">$FLOW 0</p>
                             </div>
                             <div className="flex items-center lg:ml-[71px] ml-[14px]  justify-start">
                                 <Image src={up2} alt="" className="h-[12px]  w-[12px]" />
