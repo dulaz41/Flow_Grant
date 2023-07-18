@@ -104,49 +104,49 @@ const SubmitProposal: React.FC = () => {
 
 
 
-        console.log("Starting");
+        // console.log("Starting");
         // Handle form submission logic here
-        async function createProposal(proposer: any, name: any, projectName: any, coverDescription: any, projectDescription: any, fundingGoal: any) {
-            const CREATE_NEW_PROP = `
-        import Fgrant from 0x058eff19c094b6de
-import FungibleToken from 0x058eff19c094b6de
-transaction (proposer: Address, name: String, projectName: String, coverDescription: String, projectDescription: String, fundingGoal: UFix64){
-  prepare(acct: AuthAccount) {
-    let proposalRes = acct.borrow<&Fgrant.ProposalRes>(from: Fgrant.FgrantStoragePath) 
-                            ?? panic("Proposal Resourse does not exist")
-    log("Starting create")
-    let proposalID = proposalRes.createProposal(
-      proposer: proposer,
-      name: name,
-      projectName: projectName,
-      coverDescription: coverDescription,
-      projectDescription: projectDescription,
-      fundingGoal: fundingGoal
-    )
-    log(proposalID)
-  }
-  execute {
-      log("Successfully Created Proposal")
-  }
-} `
-            const transactionId = await fcl.mutate({
-                cadence: CREATE_NEW_PROP,
-                args: (arg, t) => [
-                    arg(proposer, t.Address),
-                    arg(name, t.String),
-                    arg(projectName, t.String),
-                    arg(coverDescription, t.String),
-                    arg(projectDescription, t.String),
-                    arg(fundingGoal, t.UFix64),
-                ],
-                payer: fcl.authz,
-                proposer: fcl.authz,
-                authorizations: [fcl.authz],
-                limit: 1000,
-            });
-            fcl.tx(transactionId).subscribe(res => console.log(res))
+//         async function createProposal(proposer: any, name: any, projectName: any, coverDescription: any, projectDescription: any, fundingGoal: any) {
+//             const CREATE_NEW_PROP = `
+//         import Fgrant from 0x058eff19c094b6de
+// import FungibleToken from 0x058eff19c094b6de
+// transaction (proposer: Address, name: String, projectName: String, coverDescription: String, projectDescription: String, fundingGoal: UFix64){
+//   prepare(acct: AuthAccount) {
+//     let proposalRes = acct.borrow<&Fgrant.ProposalRes>(from: Fgrant.FgrantStoragePath) 
+//                             ?? panic("Proposal Resourse does not exist")
+//     log("Starting create")
+//     let proposalID = proposalRes.createProposal(
+//       proposer: proposer,
+//       name: name,
+//       projectName: projectName,
+//       coverDescription: coverDescription,
+//       projectDescription: projectDescription,
+//       fundingGoal: fundingGoal
+//     )
+//     log(proposalID)
+//   }
+//   execute {
+//       log("Successfully Created Proposal")
+//   }
+// } `
+//             const transactionId = await fcl.mutate({
+//                 cadence: CREATE_NEW_PROP,
+//                 args: (arg, t) => [
+//                     arg(proposer, t.Address),
+//                     arg(name, t.String),
+//                     arg(projectName, t.String),
+//                     arg(coverDescription, t.String),
+//                     arg(projectDescription, t.String),
+//                     arg(fundingGoal, t.UFix64),
+//                 ],
+//                 // payer: fcl.authz,
+//                 // proposer: fcl.authz,
+//                 // authorizations: [fcl.authz],
+//                 limit: 1000,
+//             });
+//             fcl.tx(transactionId).subscribe(res => console.log(res))
 
-        }
+//         }
 
         // const response = await fcl.send([
         //     fcl.transaction `
@@ -190,7 +190,7 @@ transaction (proposer: Address, name: String, projectName: String, coverDescript
         //   console.log({transactionId})
 
         console.log(formData);
-        await createProposal("0x6d9cda4dce6218f2", formData.name, formData.name, formData.description, formData.message, formData.amount)
+        // await createProposal("0x6d9cda4dce6218f2", formData.name, formData.name, formData.description, formData.message, formData.amount)
 
         // Reset the form
         setFormData({
