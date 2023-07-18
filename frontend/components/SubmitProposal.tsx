@@ -1,6 +1,5 @@
-"use client"
 import Image from 'next/image';
-import React, { useState, ChangeEvent, FormEvent, MouseEvent, useEffect } from 'react'
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import logo from "../public/images/logo.png";
 import AWS from 'aws-sdk';
@@ -8,24 +7,22 @@ import { v4 as uuidv4 } from 'uuid';
 import * as fcl from "@onflow/fcl";
 
 
-
 require('dotenv').config();
 
+interface FormData {
+    name: string;
+    email: string;
+    file: File | null;
+    description: string;
+    message: string;
+    website: string;
+    socialmedia: string;
+    location: string;
+    amount: string;
+}
+
 const SubmitProposal: React.FC = () => {
-
-    const [formData, setFormData] = useState<{
-        name: string;
-        email: string;
-        file: File | null;
-        description: string;
-        message: string;
-        website: string;
-        socialmedia: string;
-        location: string;
-        amount: string;
-
-    }>({
-
+    const [formData, setFormData] = useState<FormData>({
         name: '',
         description: '',
         message: '',
@@ -40,7 +37,6 @@ const SubmitProposal: React.FC = () => {
     const [passwordError, setPasswordError] = useState(false);
     const [fileError, setFileError] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (e.target.name === 'files') {
@@ -71,6 +67,22 @@ const SubmitProposal: React.FC = () => {
         setFormData({ ...formData, file: null });
     };
 
+
+
+    const signMessage = async (): Promise<string | undefined> => {
+        const wallet = await fcl.logIn();
+        const MSG = Buffer.from(`Creating Proposal for ${wallet.addr}`).toString("hex");
+        try {
+            const signatures = await fcl.currentUser.signUserMessage(MSG);
+            const signature = signatures[0]; // Extract the first signature from the array
+            return signature;
+        } catch (error) {
+            console.log(error);
+            return undefined;
+        }
+    };
+
+
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
@@ -81,7 +93,6 @@ const SubmitProposal: React.FC = () => {
         });
 
         // Upload the image to S3
-        // Upload the image to S3
         if (selectedFile) {
             const s3 = new AWS.S3();
             const key = `photos/${selectedFile.name}`; // Set the desired key with a prefix
@@ -89,7 +100,7 @@ const SubmitProposal: React.FC = () => {
                 Bucket: 'flowgrantnew',
                 Key: key,
                 Body: selectedFile,
-                ACL: 'public-read'
+                // ACL: 'public-read'
             };
 
             try {
@@ -100,97 +111,40 @@ const SubmitProposal: React.FC = () => {
             }
         }
 
+        // Sign the message
+        const signature = await signMessage();
 
+        // Prepare the proposal data
+        const proposalData = {
+            proposalId: 0,
+            walletAddress: "string",
+            name: formData.name,
+            email: formData.email,
+            file: "string",
+            description: formData.description,
+            message: formData.message,
+            website: formData.website,
+            socialmedia: formData.socialmedia,
+            proposalAmount: Number(formData.amount),
+            status: "string",
+            location: formData.location
+        };
 
-
-
-        // console.log("Starting");
-        // Handle form submission logic here
-//         async function createProposal(proposer: any, name: any, projectName: any, coverDescription: any, projectDescription: any, fundingGoal: any) {
-//             const CREATE_NEW_PROP = `
-//         import Fgrant from 0x058eff19c094b6de
-// import FungibleToken from 0x058eff19c094b6de
-// transaction (proposer: Address, name: String, projectName: String, coverDescription: String, projectDescription: String, fundingGoal: UFix64){
-//   prepare(acct: AuthAccount) {
-//     let proposalRes = acct.borrow<&Fgrant.ProposalRes>(from: Fgrant.FgrantStoragePath) 
-//                             ?? panic("Proposal Resourse does not exist")
-//     log("Starting create")
-//     let proposalID = proposalRes.createProposal(
-//       proposer: proposer,
-//       name: name,
-//       projectName: projectName,
-//       coverDescription: coverDescription,
-//       projectDescription: projectDescription,
-//       fundingGoal: fundingGoal
-//     )
-//     log(proposalID)
-//   }
-//   execute {
-//       log("Successfully Created Proposal")
-//   }
-// } `
-//             const transactionId = await fcl.mutate({
-//                 cadence: CREATE_NEW_PROP,
-//                 args: (arg, t) => [
-//                     arg(proposer, t.Address),
-//                     arg(name, t.String),
-//                     arg(projectName, t.String),
-//                     arg(coverDescription, t.String),
-//                     arg(projectDescription, t.String),
-//                     arg(fundingGoal, t.UFix64),
-//                 ],
-//                 // payer: fcl.authz,
-//                 // proposer: fcl.authz,
-//                 // authorizations: [fcl.authz],
-//                 limit: 1000,
-//             });
-//             fcl.tx(transactionId).subscribe(res => console.log(res))
-
-//         }
-
-        // const response = await fcl.send([
-        //     fcl.transaction `
-        //       import FGrant from 0xAddressA
-
-        //       transaction(proposer: Address, name: String, projectName: String, coverDescription: String, projectDescription: String, fundingGoal: UFix64) {
-        //           let proposalID: UInt64
-
-        //           prepare(signer: AuthAccount) {
-        //               let proposalRes = signer.borrow<&FGrant.ProposalRes>(from: FGrant.FGrantStoragePath)
-        //                   ?? panic("Could not borrow reference to ProposalRes")
-        //   self.proposalID = proposalRes.createProposal(
-        //     _proposer: proposer,
-        //     _name: name,
-        //     _projectName: projectName,
-        //     _coverDescription: coverDescription,
-        //     _projectDescription: projectDescription,
-        //     _fundingGoal: fundingGoal
-        //   )
-        //           }
-
-        //           execute {
-        //               log("Proposal with ID (self.proposalID) created")
-        //           }
-        //       }`
-        //     ,
-        //     fcl.args([
-        //       fcl.arg("0x6d9cda4dce6218f2", t.Address),
-        //       fcl.arg("Toheeb", t.String),
-        //       fcl.arg("New Project", t.String),
-        //       fcl.arg("Test", t.String),
-        //       fcl.arg("still testing...", t.String),
-        //       fcl.arg(100.0000, t.UFix64),
-        //     ]),
-        //     fcl.proposer(fcl.authz),
-        //     fcl.payer(fcl.authz),
-        //     fcl.authorizations([fcl.authz]),
-        //   ])
-
-        //   const transactionId = response.transactionId
-        //   console.log({transactionId})
-
-        console.log(formData);
-        // await createProposal("0x6d9cda4dce6218f2", formData.name, formData.name, formData.description, formData.message, formData.amount)
+        // Make the API call
+        try {
+            const response = await fetch('http://16.170.224.207/proposal', {
+                method: 'POST',
+                body: JSON.stringify(proposalData),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                    'Signature': signature || '' // Add the signature to the request headers
+                },
+            });
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
 
         // Reset the form
         setFormData({
@@ -207,10 +161,7 @@ const SubmitProposal: React.FC = () => {
 
         setPasswordError(false);
         setSelectedFile(null);
-
     };
-
-
 
     const [isScrollingUp, setIsScrollingUp] = useState(false);
     useEffect(() => {
@@ -259,7 +210,6 @@ const SubmitProposal: React.FC = () => {
                             <h1 className="text-[40px] text-center text-[#00EF8B] font-extrabold mb-4">Submit proposal</h1>
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-6">
-                                    {/* <label htmlFor="name" className="block mb-1 font-semibold">Name</label> */}
                                     <input
                                         type="text"
                                         id="name"
@@ -272,7 +222,6 @@ const SubmitProposal: React.FC = () => {
                                     />
                                 </div>
                                 <div className="mb-6">
-                                    {/* <label htmlFor="email" className="block mb-1 font-semibold">Email</label> */}
                                     <textarea
                                         id="description"
                                         name="description"
@@ -285,7 +234,6 @@ const SubmitProposal: React.FC = () => {
                                     ></textarea>
                                 </div>
                                 <div className="mb-6">
-                                    {/* <label htmlFor="message" className="block mb-1 font-semibold">Message</label> */}
                                     <textarea
                                         id="message"
                                         name="message"
@@ -298,7 +246,6 @@ const SubmitProposal: React.FC = () => {
                                     ></textarea>
                                 </div>
                                 <div className="mb-6">
-                                    {/* <label htmlFor="message" className="block mb-1 font-semibold">Message</label> */}
                                     <input
                                         type="number"
                                         id="amount"
@@ -311,7 +258,6 @@ const SubmitProposal: React.FC = () => {
                                     />
                                 </div>
                                 <div className="mb-6">
-                                    {/* <label htmlFor="message" className="block mb-1 font-semibold">Message</label> */}
                                     <input
                                         type="email"
                                         id="email"
@@ -324,7 +270,6 @@ const SubmitProposal: React.FC = () => {
                                     />
                                 </div>
                                 <div className="mb-6">
-                                    {/* <label htmlFor="message" className="block mb-1 font-semibold">Message</label> */}
                                     <input
                                         type="url"
                                         id="website"
@@ -334,11 +279,9 @@ const SubmitProposal: React.FC = () => {
                                         placeholder='Project website'
                                         className="border-b-2 border-gray-300 px-4 py-2 outline-none rounded-md w-full"
                                         required
-
                                     />
                                 </div>
                                 <div className="mb-6">
-                                    {/* <label htmlFor="message" className="block mb-1 font-semibold">Message</label> */}
                                     <input
                                         type="text"
                                         id="socialmedia"
@@ -348,11 +291,9 @@ const SubmitProposal: React.FC = () => {
                                         placeholder='Project social media handle'
                                         className="border-b-2 border-gray-300 px-4 py-2 outline-none rounded-md w-full"
                                         required
-
                                     />
                                 </div>
                                 <div className="mb-6">
-                                    {/* <label htmlFor="message" className="block mb-1 font-semibold">Message</label> */}
                                     <input
                                         type="text"
                                         id="location"
@@ -372,7 +313,7 @@ const SubmitProposal: React.FC = () => {
                                             <button
                                                 type="button"
                                                 className="text-red-500 focus:outline-none"
-                                                onClick={() => setFormData({ ...formData, file: null })}
+                                                onClick={handleDeleteFile}
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -383,7 +324,6 @@ const SubmitProposal: React.FC = () => {
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
                                                     className="w-4 h-4"
-                                                    onClick={handleDeleteFile}
                                                 >
                                                     <line x1="18" y1="6" x2="6" y2="18" />
                                                     <line x1="6" y1="6" x2="18" y2="18" />
@@ -404,7 +344,6 @@ const SubmitProposal: React.FC = () => {
                                     {fileError && <p className="text-red-500 text-sm mt-1">Invalid file or file size exceeded.</p>}
                                 </div>
 
-
                                 <div className='flex items-center mt-[50px] mb-[20px] justify-center'>
                                     <button
                                         type="submit"
@@ -414,13 +353,12 @@ const SubmitProposal: React.FC = () => {
                                     </button>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default SubmitProposal
+export default SubmitProposal;
