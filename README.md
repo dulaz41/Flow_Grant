@@ -24,37 +24,37 @@ The contract is written in Cadence, the resource-oriented programming language u
 
 The Flow Grant contract consists of three main parts:
 
-- ProposalDetails struct: This defines the data structure for a project proposal, including details like the proposer's address, project name, description, funding goal, and the total funds raised so far.
-- PoolDetails struct: This defines the data structure for a funding pool, including details like the pool ID, associated proposal ID, pool creator's address, and the total amount contributed to the pool.
-- Proposal(Res) Resource: This resource contains the main logic for the Fgrant contract. It implements the ProposalPublic and ProposalPrivate interfaces, providing functions for creating proposals, funding proposals, creating funding pools, contributing to pools, and withdrawing funds.
+- `ProposalDetails struct`: This defines the data structure for a project proposal, including details like the proposer's address, project name, description, funding goal, and the total funds raised so far.
+- `PoolDetails struct`: This defines the data structure for a funding pool, including details like the pool ID, associated proposal ID, pool creator's address, and the total amount contributed to the pool.
+- `Proposal(Res) Resource`: This resource contains the main logic for the Fgrant contract. It implements the `ProposalPublic` and `ProposalPrivate` interfaces, providing functions for `creating proposals`, `funding proposals`, `creating funding pools`, `contributing to pools`, and `withdrawing funds`.
 
 ### 3. Smart Contract Logic
 
 The Flow Grant contract allows users to perform the following actions:
 
-- Create Proposal: Users can propose a new project by providing relevant details such as project name, description, funding goal, etc. A unique proposal ID is generated, and the proposal is added to the proposals dictionary.
-- Fund Proposal: Users can contribute tokens to a specific proposal. The contract ensures that a proposal can only be funded once and by someone other than the proposer. When the funding goal is met, the fundingCompleted flag is set to true.
-- Create Pool: Users can create a funding pool associated with a particular proposal. The pool allows users to contribute to the project without directly funding the proposal. The contract verifies that funding is not already completed for the associated proposal.
-- Fund Pool: Users can contribute tokens to a specific funding pool. The contract ensures that the funding is not already completed for the associated proposal.
-- Withdraw Proposal Funds: Only the proposer can withdraw the funds raised for their proposal once the funding goal is met. The total funds are transferred to the proposer's account.
-- Withdraw: This function allows users to withdraw their remaining funds from the contract.
+- `Create Proposal`: Users can propose a new project by providing relevant details such as project name, description, funding goal, etc. A unique proposal ID is generated, and the proposal is added to the proposals dictionary.
+- `Fund Proposal`: Users can contribute tokens to a specific proposal. The contract ensures that a proposal can only be funded once and by someone other than the proposer. When the funding goal is met, the fundingCompleted flag is set to true.
+- `Create Pool`: Users can create a funding pool associated with a particular proposal. The pool allows users to contribute to the project without directly funding the proposal. The contract verifies that funding is not already completed for the associated proposal.
+- `Fund Pool`: Users can contribute tokens to a specific funding pool. The contract ensures that the funding is not already completed for the associated proposal.
+- `Withdraw Proposal Funds`: Only the proposer can withdraw the funds raised for their proposal once the funding goal is met. The total funds are transferred to the proposer's account.
+- `Withdraw`: This function allows users to withdraw their remaining funds from the contract.
 
 ### 4. Smart Contract Interfaces
 
-The Flow Grant contract exposes two resource interfaces: ProposalPublic and ProposalPrivate.
+The Flow Grant contract exposes two resource interfaces: `ProposalPublic` and `ProposalPrivate`.
 
 ProposalPublic Interface:
 
-- createProposal: Allows users to propose a new project.
-- fundProposal: Allows users to contribute tokens to a proposal.
-- createPool: Allows users to create a funding pool.
-- fundPool: Allows users to contribute tokens to a funding pool.
-- withdrawProposalFund: Allows the proposer to withdraw the funds once the funding goal is met.
-- getProposals: Returns the details of the current proposal.
+- `createProposal`: Allows users to propose a new project.
+- `fundProposal`: Allows users to contribute tokens to a proposal.
+- `createPool`: Allows users to create a funding pool.
+- `fundPool`: Allows users to contribute tokens to a funding pool.
+- `withdrawProposalFund`: Allows the proposer to withdraw the funds once the funding goal is met.
+- `getProposals`: Returns the details of the current proposal.
 
 ProposalPrivate Interface:
 
-- withdraw: Allows users to withdraw their remaining funds from the contract.
+- `withdraw`: Allows users to withdraw their remaining funds from the contract.
 
 ### 5. Code Usage and Interaction
 
@@ -92,23 +92,23 @@ transaction (proposer: Address, name: String, projectName: String, coverDescript
 
 ### 6. Frontend - React and TypeScript
 
-The Flow Grant frontend is built using React and TypeScript to provide a user-friendly interface for interacting with the smart contract.
+The Flow Grant frontend is built using `React` and `TypeScript` to provide a user-friendly interface for interacting with the smart contract.
 
-### 7. Backend - AWS S3
+### 7. Backend - Amazon Web Service (AWS) S3
 
-The backend Flow Grant utilizes AWS S3 to save user profile data securely.
+The backend Flow Grant utilizes `AWS S3` to save user profile data securely.
 
 ### 8. How to Deploy the Contract
 
 To deploy the Flow Grant contract on the Flow blockchain, you need to use the Flow CLI or a development tool like VSCode with the Cadence extension.
 
-Install the Flow CLI: Follow the official Flow documentation to install the Flow CLI on your machine.
+`Install the Flow CLI`: Follow the official Flow documentation to install the Flow CLI on your machine.
 
-Configure the Flow Project: Set up a new Flow project or use an existing project to deploy the Fgrant contract.
+`Configure the Flow Project`: Set up a new Flow project or use an existing project to deploy the Fgrant contract.
 
-Write the Contract Code: Copy the Fgrant contract code into a new Cadence file (e.g., Fgrant.cdc).
+`Write the Contract Code`: Copy the Fgrant contract code into a new Cadence file (e.g., Fgrant.cdc).
 
-Deploy the Contract: Use the Flow CLI to deploy the contract to the Flow blockchain.
+`Deploy the Contract`: Use the Flow CLI to deploy the contract to the Flow blockchain.
 
 ### 9. Known Issues and Limitations
 
