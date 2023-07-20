@@ -1,5 +1,5 @@
-import FGrant from 0x058eff19c094b6de
-import FungibleToken from 0x058eff19c094b6de
+import FGrant from 0x6d9cda4dce6218f2
+import FungibleToken from 0x6d9cda4dce6218f2
 
 transaction (proposer: Address, name: String, projectName: String, coverDescription: String, projectDescription: String, fundingGoal: UFix64){
   prepare(acct: AuthAccount) {

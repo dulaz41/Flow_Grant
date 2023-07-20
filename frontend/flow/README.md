@@ -1,4 +1,4 @@
-**Fgrant - Decentralized Funding Platform**
+**Flow grant - Decentralized Funding Platform**
 
 **Table of Contents**
 
