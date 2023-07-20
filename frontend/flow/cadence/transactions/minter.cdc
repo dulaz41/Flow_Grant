@@ -1,4 +1,5 @@
-
+import MyFlowToken from "../contracts/FlowToken.cdc"
+import FungibleToken from "../contracts/FungibleToken.cdc"
 
 transaction(receiverAccount: Address) {
     prepare(acct: AuthAccount) {
